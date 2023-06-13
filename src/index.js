@@ -6,7 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const { database } = require('./keys');
-
+const passport = require("passport")
 
 
 //inicializations
@@ -36,11 +36,12 @@ app.use(session({
 
 }));
 
-app.use(flash())
+app.use(flash());
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
-app.use(express.json())
-
+app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Global variables
 
@@ -53,7 +54,7 @@ app.use((req, res, next) => {
 // Routes
 app.use(require('./routes'));
 app.use(require('./routes/links'))
-app.use('/links',require('./routes/autentication'))
+app.use('/',require('./routes/autentication'))
 
 //Public
 app.use(express.static(path.join(__dirname, 'public')))
