@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 <div class="container">
-    <a class="navbar-brand" href="/links">Favorite Links</a>
+    <a class="navbar-brand" href="/">Favorite Links</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+        
+        {{#if user }}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
@@ -16,8 +18,22 @@
           <a class="nav-link" href="/add">Add a links</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Disabled</a>
+          <a class="nav-link" href="/profile">Welcome !{{user.fullname}}</a>
         </li>
+        <li class="nav-item">
+          <a href="/logout" class="nav-link">Logout</a>
+        </li>
+          {{else}}
+
+              <li class="nav-item">
+              <a href="/signin" class="nav-link">Signin</a>
+              </li>
+              <li class="nav-item">
+              <a href="/signup" class="nav-link">Signup</a>
+              </li>
+
+        {{/if }}
+
       </ul>
     </div>
 </div>
