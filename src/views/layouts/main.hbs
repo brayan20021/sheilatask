@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/personalizado.css">
+    <link rel="stylesheet" href="/vendors/sweetalert2/sweetalert2.min.css">
 </head>
 <body>
     
@@ -35,5 +37,19 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
 
     <script src="/js/main.js"></script>
+
+    {{!-- font Awesome --}}
+    <script src="/vendors/fontawesome/all.min.js"></script>
+
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+
+    {{!-- Sweet alert --}}
+    <script src="/js/extensions/sweetalert2.js"></script>
+    <script src="/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 
 </html>

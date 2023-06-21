@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [1, 50], // Establece un límite mínimo de 1 caracter y máximo de 50 caracteres
+          len: [1, 50], 
         },
       },
       password: {
@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [1, 60], // Establece un límite mínimo de 1 caracter y máximo de 50 caracteres
+          len: [1, 60],
         },
       },
       email: {
@@ -33,7 +33,7 @@ module.exports = {
         allowNull: false,
         unique: true,
         validate: {
-          len: [1, 100], // Establece un límite mínimo de 1 caracter y máximo de 50 caracteres
+          len: [1, 100], 
         },
       },
       createdAt: {

@@ -30,6 +30,9 @@ module.exports = {
           len: [1, 2],
         },
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

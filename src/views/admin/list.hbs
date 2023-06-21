@@ -1,19 +1,26 @@
 <div class="container p-4">
   <div class="row">
     {{#each datos}}
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-body">
+                        <div class="col-md-4 float-right">
+                        <a class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar nota" href="task/edit/{{id}}"><span class="fa-fw select-all fas"></span></dt></dl></a>
+                        <a class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar nota" href="links/delete/{{id}}"><span class="fa-fw select-all fas"></span></dt></a>
+                        </div><br>
+
                         <a href="">
                             <h3 class="card-title text-uppercase">
                                 {{title}}
                             </h3>
                         </a>
                         <p class="m-2">{{description}}</p>
-                        <p>{{timeago create_at }}</p>
-                        <a href="links/delete/{{id}}" class="btn btn-danger">Delete</a>
-                        <a href="links/edit/{{id}}" class="btn btn-secondary">Edit</a>
                     </div>
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> </li>
+                        <li class="list-group-item"><p><strong>Agregado hace:</strong> {{timeago create_at }}</p></li>
+                        <li class="list-group-item"><p><strong>Te quedan:</strong> {{timeago create_at }} para resolver</p></li>
+                    </ul>
                 </div>
             </div>
             {{else}}
@@ -22,7 +29,7 @@
                         <p><strong> A link has been created yet</strong></p>
                         <a class="btn btn-success" href="/add">Create One!</a>
                     </div>
-                </div>
+            </div>
     {{/each}}
   </div>
 </div>

@@ -42,29 +42,29 @@ router.get('/links/delete/:id', isLoggetIn, async (req,res) => {
     
 });
 
-router.get('/links/edit/:id', isLoggetIn, async (req, res) => {
+router.get('/task/edit/:id', isLoggetIn, async (req, res) => {
 
     const {id} = req.params;
-    const links =  await pool.query('SELECT * FROM links WHERE ID = ?', [id]);
-    console.log(links)
-    res.render('./links/edit',{link:links[0]});
+    const task =  await pool.query('SELECT * FROM tasks WHERE ID = ?', [id]);
+    //console.log(task)
+    res.render('./admin/edit', {task:task[0]});
 });
 
 router.post('/links/edit/:id', isLoggetIn, async (req, res) => {
 
     const {id} = req.params;
-    const {title, url, description} = req.body;
-    const newlink = {
+    const {title, description, dueDate} = req.body;
+    const newtask = {
         title,
-        url,
-        description
+        description,
+        dueDate
     }
 
-    await pool.query('UPDATE links SET ? where id = ?', [newlink, id]);
+    await pool.query('UPDATE tasks SET ? where id = ?', [newtask, id]);
     
-    console.log(newlink)
+    console.log(newtask)
     req.flash('success', "Link updated successfully")
-    res.redirect('/links');
+    res.redirect('/tareas-disponibles');
 
 });
 
