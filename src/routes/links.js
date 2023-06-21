@@ -5,9 +5,9 @@ const router = express.Router();
  const {isLoggetIn} = require('../lib/auth')
 
 
-router.get('/add', isLoggetIn, (req, res) => {
+router.get('/admin', isLoggetIn, (req, res) => {
 
-    res.render('./links/add');  
+    res.render('./admin/dashboard');  
 
 });
 
@@ -18,18 +18,18 @@ router.post('/add', isLoggetIn, async (req, res) => {
         title,
         url,
         description
-    });
+});
 
     await pool.query("insert into links set ?", [newlink]);
     req.flash('success', 'Link saved susessfully');
     res.redirect("/links");
 });
 
-router.get('/links', isLoggetIn, async (req, res) => {
+router.get('/tareas-disponibles', isLoggetIn, async (req, res) => {
 
-   links = await pool.query('select * from links')
-   console.log(links);
-   res.render('./links/list', {datos: links});
+   task = await pool.query('select * from tasks')
+   console.log(task);
+   res.render('./admin/list', {datos: task});
 });
 
 router.get('/links/delete/:id', isLoggetIn, async (req,res) => {
