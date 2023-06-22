@@ -42,7 +42,11 @@ router.get('/tareas-disponibles', isLoggetIn, async (req, res) => {
 
 router.get('/materias', isLoggetIn, async (req, res) => {
     
-    const signature = await pool.query('Select * from subjects');
+    const user = req.user.id;
+    console.log(user)
+    const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
+    inner join subjects on subjects.id = tasks.subject_id
+    where subjects.user_id = ${user} group by name;`);
     res.render('./admin/subject', {signature: signature});
     
     
