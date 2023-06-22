@@ -4,7 +4,7 @@
         <div class="col-md-12 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <form action="/links/edit/{{task.id}}" method="post">
+                    <form action="/signaturelist/links/edit/{{task.id}}" method="post">
                     .<div class="mb-3">
                       <input type="text" name="title" id="" value="{{task.title}}" class="form-control" placeholder="Name" aria-describedby="helpId">
                     </div>
@@ -19,6 +19,7 @@
                        <center><div class="date-input-container">
                         <h6>Fecha de entrega</h6>
                         <input type="date" name="dueDate" id="date-input" class="date-input">
+                        <input type="hidden" name="signature" value="{{task.subject_id}}">
                         </div>
                         
                         </center> 
