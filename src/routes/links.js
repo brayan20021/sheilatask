@@ -45,8 +45,9 @@ router.get('/materias', isLoggetIn, async (req, res) => {
     const user = req.user.id;
     console.log(user)
     const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
-    inner join subjects on subjects.id = tasks.subject_id
-    where subjects.user_id = ${user} group by name;`);
+    right join subjects on subjects.id = tasks.subject_id
+    where subjects.user_id = ${user} group by name;
+    `);
     res.render('./admin/subject', {signature: signature});
     
     
@@ -57,12 +58,9 @@ router.post('/agregar-asignaturas', isLoggetIn, async (req, res) => {
     const {name} = req.body;
     const user = req.user.id
     const save = {
-        title,
-        description,
-        dueDate,
+        name,
         'user_id': user,
     }
-    console.log(save)
     await pool.query("insert into subjects set ?", [save]);
     req.flash('success', 'Asignatura guardado correctamente');
     res.redirect('/materias');
@@ -95,7 +93,6 @@ router.get('/signaturelist/task/edit/:id', isLoggetIn, async (req, res) => {
 
     const {id} = req.params;
     const task =  await pool.query('SELECT * FROM tasks WHERE ID = ?', [id]);
-    //console.log(task)
     res.render('./admin/edit', {task:task[0]});
 
 });

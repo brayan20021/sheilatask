@@ -27,7 +27,7 @@ router.get('/signin', (req, res) => {
 router.post('/signin', (req, res, next) => {
     console.log(req.body)
     passport.authenticate('local.signin', {
-        successRedirect: '/profile',
+        successRedirect: '/admin',
         failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);

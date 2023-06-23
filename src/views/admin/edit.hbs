@@ -1,5 +1,21 @@
-<div class="container p-12">
+<div class="container p-4">
+  <div class="row">
+    <div class="col-12 col-md-6 order-md-1 order-last">
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a type="button" class="btn btn-warning" href="/signaturelist/{{task.subject_id}}">
+                        volver
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 
+<div class="container p-12">
     <div class="row">
         <div class="col-md-12 mx-auto">
             <div class="card">
@@ -8,26 +24,22 @@
                     .<div class="mb-3">
                       <input type="text" name="title" id="" value="{{task.title}}" class="form-control" placeholder="Name" aria-describedby="helpId">
                     </div>
-
                     <div class="form-group">
                         <div class="mb-3">
                           <textarea class="form-control" name="description" id="" rows="3" placeholder="Description">{{task.description}}</textarea>
                         </div>
                     </div>
-
                     <div class="form-group">
                        <center><div class="date-input-container">
                         <h6>Fecha de entrega</h6>
                         <input type="date" name="dueDate" id="date-input" class="date-input">
                         <input type="hidden" name="signature" value="{{task.subject_id}}">
                         </div>
-                        
                         </center> 
                     </div>
-                    <div class="form-group">
+                        <div class="form-group">
                         <button type="submit" class="btn btn-danger btn-block">Save</button>
-                    </div>
-                    
+                    </div>             
                     </form>
                 </div>
             </div>
