@@ -6,8 +6,8 @@ const { isLoggetIn, isNotLoggetIn } = require('../lib/auth');
 
 router.get('/signup',  (req, res) => {
 
-    //res.send("Estoy aqui")
     res.render('./auth/signup');
+    
 });
 
 
@@ -19,13 +19,13 @@ router.post('/signup', passport.authenticate('local.signup', {
 }));
 
 router.get('/signin', (req, res) => {
-    
+
     res.render('./auth/signin');
 
 });
 
 router.post('/signin', (req, res, next) => {
-    console.log(req.body)
+
     passport.authenticate('local.signin', {
         successRedirect: '/admin',
         failureRedirect: '/signin',
@@ -37,6 +37,7 @@ router.post('/signin', (req, res, next) => {
 router.get('/profile', isLoggetIn, (req, res) => {
 
     res.render('partials/profile');
+
 });
 
 router.get('/logout', isLoggetIn, (req, res) => {
@@ -48,8 +49,6 @@ router.get('/logout', isLoggetIn, (req, res) => {
             res.redirect('/signin'); 
         }
     });
- 
-    
 
 })
 
