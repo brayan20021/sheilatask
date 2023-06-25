@@ -19,7 +19,7 @@ router.post('/signup', passport.authenticate('local.signup', {
 }));
 
 router.get('/signin', (req, res) => {
-
+    
     res.render('./auth/signin');
 
 });
@@ -27,7 +27,7 @@ router.get('/signin', (req, res) => {
 router.post('/signin', (req, res, next) => {
 
     passport.authenticate('local.signin', {
-        successRedirect: '/admin',
+        successRedirect: '/dashboard',
         failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);

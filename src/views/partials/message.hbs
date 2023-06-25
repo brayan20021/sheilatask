@@ -15,12 +15,11 @@
  {{#if message}}
         <div class="container p-4">
             <div class="row">
-                <div class="col-md-4 mx-auto">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{message}}
-                        <button type="button" class="close" data-dismiss="danger" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <div class="col-md-12 mx-auto">
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <center><h5 class="text-white">{{message}}</h5></center>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
                     </div>
                 </div>
             </div>

@@ -16,12 +16,12 @@ const helpers = require('../lib/helpers');
         const user = rows[0];
         const validPassword = await helpers.mathPassword(password, user.password);
         if(validPassword){
-            done(null, user, req.flash('success', 'Welcome', + user.username));
+            done(null, user, req.flash('success', 'Bienvenido!', + user.username));
         } else {
-            done(null, false, req.flash('message','Incorrect Password'));
+            done(null, false, req.flash('message','Contraseña incorrecta'));
         }
     } else {
-        done(null, false, req.flash('message','The username does not exists'))
+        done(null, false, req.flash('message','El usuario no existe'))
     }
 })); 
 
