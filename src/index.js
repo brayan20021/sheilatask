@@ -55,7 +55,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use(require('./routes'));
-app.use(require('./routes/links'))
+app.use(require('./routes/links'));
+app.use(require('./routes/fastnote'));
 app.use('/',require('./routes/autentication'))
 
 //Public

@@ -1,199 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const tasksController = require('../controllers/tasksController');
 
+//Calling taskController class 
+const taksClass = new tasksController();
 
 const pool = require('../database')
 const { isLoggetIn } = require('../lib/auth')
 
 
-router.get('/admin', isLoggetIn, (req, res) => {
 
-    res.render('./admin/dashboard');
+router.get('/dashboard', isLoggetIn, taksClass.dashboard);
 
-});
+router.get('/signature', isLoggetIn, taksClass.signature);
 
-router.get('/add/:signatureid', isLoggetIn, async (req, res) => {
+router.post('/add-signature', isLoggetIn, taksClass.post_addsignature);
 
-    const { signatureid } = req.params;
-    res.render('./admin/add', { signatureid });
+router.get('/add/:signatureid', isLoggetIn, taksClass.addnote);
 
-});
+router.post('/add/:signatureid', isLoggetIn, taksClass.post_addnote);
 
-router.post('/add/:signatureid', isLoggetIn, async (req, res) => {
+router.get('/signaturelist/:idsignature', isLoggetIn, taksClass.showsignature);
 
-    try {
+router.get('/signaturelist/task/delete/:id', isLoggetIn, taksClass.deletenote);
 
-        const { title, url, description } = req.body;
-        const { signatureid } = req.params
-        const newlink = ({
-            title,
-            description,
-            'subject_id': signatureid,
-        });
+router.get('/signaturelist/task/edit/:id', isLoggetIn, taksClass.editnote);
 
-        await pool.query("insert into tasks set ?", [newlink]);
-        req.flash('success', 'Tarea guardado correctamente');
-        res.redirect(`/signaturelist/${signatureid}`);
+router.post('/signaturelist/tasks/edit/:id', isLoggetIn, taksClass.post_editnote);
 
-    } catch (error) {
-        res.render('./partials/errorserver');
-    }
 
-});
-
-router.get('/tareas-disponibles', isLoggetIn, async (req, res) => {
-
-    try {
-
-        task = await pool.query(`select tasks.id, tasks.title, tasks.description, tasks.dueDate, tasks.createdAt, tasks.updatedAt, status.nombre as statusnombre from tasks
-        inner join status on tasks.status_id = status.id where eliminado = 0;`);
-        console.log(task);
-        res.render('./admin/list', { datos: task });
-
-    } catch (error) {
-        res.render('./partials/errorserver');
-    }
-
-});
-
-router.get('/materias', isLoggetIn, async (req, res) => {
-
-    try {
-
-        const user = req.user.id;
-        const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
-            right join subjects on subjects.id = tasks.subject_id
-            where subjects.user_id = ${user} group by name;
-            `);
-        res.render('./admin/subject', { signature: signature });
-
-    } catch (error) {
-
-        res.render('./partials/errorserver');
-    }
-
-});
-
-router.post('/agregar-asignaturas', isLoggetIn, async (req, res) => {
-
-
-    try {
-
-        const { name } = req.body;
-        const user = req.user.id
-        const save = {
-            name,
-            'user_id': user,
-        }
-        await pool.query("insert into subjects set ?", [save]);
-        req.flash('success', 'Asignatura guardado correctamente');
-        res.redirect('/materias');
-
-    } catch (error) {
-        res.render('./partials/errorserver');
-    }
-
-});
-
-router.get('/signaturelist/:id', isLoggetIn, async (req, res) => {
-
-    try {
-
-        const { id } = req.params
-        const signature = await pool.query('Select * from tasks where subject_id = ?', [id]);
-
-        res.render('./admin/signaturelist', { signature: signature, id });
-
-    } catch (error) {
-
-        res.render('./partials/errorserver');
-
-    }
-
-
-});
-
-
-router.get('/signaturelist/task/delete/:id', isLoggetIn, async (req, res) => {
-
-    try {
-
-
-        const { id } = req.params
-        await pool.query('UPDATE tasks SET eliminado = 1 where id = ?', [id]);
-        //req.flash('success', 'Link removed successfully');
-        res.redirect("/tareas-disponibles");
-        req.flash('success', 'Tarea removida correctamente');
-
-    } catch (error) {
-
-        res.render('./partials/errorserver');
-
-
-    }
-
-
-});
-
-router.get('/signaturelist/task/edit/:id', isLoggetIn, async (req, res) => {
-
-
-
-    try {
-
-        const { id } = req.params;
-        const task = await pool.query('SELECT * FROM tasks WHERE ID = ?', [id]);
-        res.render('./admin/edit', { task: task[0] });
-
-    } catch (error) {
-
-        res.render('./partials/errorserver');
-
-    }
-
-});
-
-router.post('/signaturelist/links/edit/:id', isLoggetIn, async (req, res) => {
-
-
-    try {
-
-        const { id } = req.params;
-        const { title, description, dueDate, signature } = req.body;
-        const newtask = {
-            title,
-            description,
-            dueDate
-        }
-
-        await pool.query('UPDATE tasks SET ? where id = ?', [newtask, id]);
-
-        req.flash('success', "Tarea actualizado correctamente")
-        res.redirect(`/signaturelist/${signature}`);
-
-    } catch (error) {
-
-        res.render('./partials/errorserver');
-
-    }
-
-});
-
-router.get('/task/finishtask/:id', isLoggetIn, async (req, res) => {
-
-    try {
-
-
-        const { id } = req.params;
-        const task = await pool.query('SELECT * FROM tasks WHERE ID = ?', [id]);
-        //console.log(task)
-        res.redirect('/tareas-disponibles');
-
-    } catch (error) {
-        res.render('./partials/errorserver');
-    }
-
-
-});
 
 module.exports = router;
