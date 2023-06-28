@@ -1,33 +1,33 @@
 //Contect the database
 const pool = require('../database');
 
-class tasksController  {
+class tasksController {
 
-   async dashboard(req, res){
-    
-    res.render('./admin/dashboard');
+    async dashboard(req, res) {
+
+        res.render('./admin/dashboard');
 
     }
 
-    async signature (req, res){
+    async signature(req, res) {
 
         try {
 
             const user = req.user.id;
             const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
                 right join subjects on subjects.id = tasks.subject_id
-                where subjects.user_id = ${user} group by name;
+                where subjects.user_id = ${user} and removed = 0 group by name;
                 `);
             res.render('./admin/subject', { signature: signature });
-    
+
         } catch (error) {
-    
+
             res.render('./partials/errorserver');
         }
 
     }
 
-    async post_addsignature (req, res){
+    async post_addsignature(req, res) {
 
         try {
 
@@ -40,56 +40,89 @@ class tasksController  {
             await pool.query("insert into subjects set ?", [save]);
             req.flash('success', 'Asignatura guardado correctamente');
             res.redirect('/signature');
-    
+
         } catch (error) {
             res.render('./partials/errorserver');
         }
 
     }
 
-     async showsignature(req, res){
+    async post_updatesignature(req, res) {
+
+        try {
+
+            const idsignature = req.body;
+
+            const id = idsignature.data
+            const name = idsignature.name
+            await pool.query('update subjects set name = ? where id = ?', [name, id]);
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+
+    }
+
+    async post_deletesignature(req, res) {
+
+        try {
+
+            const id = req.body.data;
+            await pool.query('update subjects set removed = 1 where id = ?', [id]);
+            res.json("Hellow world")
+
+        } catch (error) {
+
+        }
+
+
+    }
+
+    async showsignature(req, res) {
 
         try {
 
             const { idsignature } = req.params
-            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ?', [idsignature]);
-    
+            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? order by complete', [idsignature]);
+
             res.render('./admin/signaturelist', { signature: signature, idsignature });
-    
+
         } catch (error) {
-    
+
             res.render('./partials/errorserver');
             console.log(error)
-    
+
         }
 
     }
 
-    async addnote(req, res){
-        
+    async addnote(req, res) {
+
         const { signatureid } = req.params;
         res.render('./admin/add', { signatureid });
 
     }
 
-    async editnote(req, res){
+    async editnote(req, res) {
 
         try {
 
             const { id } = req.params;
             const task = await pool.query('SELECT * FROM tasks WHERE ID = ?', [id]);
             res.render('./admin/edit', { task: task[0] });
-    
+
         } catch (error) {
-    
+
             res.render('./partials/errorserver');
-    
+
         }
 
     }
 
-    async post_editnote(req, res){
-        
+    async post_editnote(req, res) {
+
         try {
 
             const { id } = req.params;
@@ -99,22 +132,22 @@ class tasksController  {
                 description,
                 dueDate
             }
-    
+
             await pool.query('UPDATE tasks SET ? where id = ?', [newtask, id]);
-    
+
             req.flash('success', "Tarea actualizado correctamente")
             res.redirect(`/signaturelist/${signature}`);
-    
+
         } catch (error) {
-    
+
             res.render('./partials/errorserver');
-    
+
         }
-        
+
     }
 
-    async deletenote(req, res){
-        
+    async deletenote(req, res) {
+
         try {
 
             const { id } = req.params
@@ -122,7 +155,7 @@ class tasksController  {
             await pool.query('UPDATE tasks SET eliminado = 1 where id = ?', [id]);
             req.flash('success', 'Tarea removida correctamente');
             res.redirect(`/signaturelist/${signatureid[0].subject_id}`);
-           
+
 
         } catch (error) {
 
@@ -134,8 +167,8 @@ class tasksController  {
     }
 
 
-    async post_addnote(req, res){
-        
+    async post_addnote(req, res) {
+
         try {
 
             const { title, url, description } = req.body;
@@ -145,14 +178,28 @@ class tasksController  {
                 description,
                 'subject_id': signatureid,
             });
-    
+
             await pool.query("insert into tasks set ?", [newlink]);
             req.flash('success', 'Tarea guardado correctamente');
             res.redirect(`/signaturelist/${signatureid}`);
-    
+
         } catch (error) {
             res.render('./partials/errorserver');
         }
+
+    }
+
+    async finishtask(req, res) {
+
+        const { id } = req.params;
+
+        const task = await pool.query('select * from tasks where id = ?', [id]);
+        console.log(task)
+        const signature = task[0].subject_id;
+
+        await pool.query('update tasks set complete = 1 where id = ?', [id]);
+
+        res.redirect(`/signaturelist/${signature}`)
 
     }
 

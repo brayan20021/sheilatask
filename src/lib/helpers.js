@@ -19,8 +19,7 @@ helpers.mathPassword = async (password, savedPassword) => {
     } catch (error) {
         console.log(error)
     }
-   
-
+    
 }
 
 module.exports = helpers;

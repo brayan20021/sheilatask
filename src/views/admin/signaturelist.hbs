@@ -1,6 +1,6 @@
 <div class="container p-4">
-  <div class="row">
-    <div class="col-12 col-md-6 order-md-1 order-last">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
             <h3>Asignaturas registradas</h3>
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
@@ -8,7 +8,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
                         <a type="button" class="btn btn-primary" href="/add/{{idsignature}}">
-                        Agregar notas
+                            Agregar notas
                         </a>
                     </li>
                 </ol>
@@ -16,17 +16,20 @@
         </div>
     </div>
 
-    </form>
-
-<div class="container p-4">
-  <div class="row">
-    {{#each signature}}
+    <div class="container p-4">
+        <div class="row">
+            {{#each signature}}
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="col-md-4 float-right">
-                        <a class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar nota" href="task/edit/{{id}}"><span class="fa-fw select-all fas"></span></dt></dl></a>
-                        <a class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar nota" href="task/delete/{{id}}"><span class="fa-fw select-all fas"></span></dt></a>
+                            <a class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Editar nota" href="task/edit/{{id}}"><span class="fa-fw select-all fas"></span>
+                                </dt>
+                                </dl></a>
+                            <a class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Eliminar nota" href="task/delete/{{id}}"><span
+                                    class="fa-fw select-all fas"></span></dt></a>
                         </div><br>
 
                         <a href="">
@@ -37,22 +40,32 @@
                         <p class="m-2">{{description}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> </li>
-                        <li class="list-group-item"><p><strong>Agregado hace:</strong> {{timeago create_at }}</p></li>
-                        <li class="list-group-item"><p><strong>Te quedan:</strong> {{timeago create_at }} para resolver</p></li>
-                         <li class="list-group-item"><p><strong>Estado:</strong> {{statusnombre}}</p></li>
-                    </ul>
-                    <a class="btn btn-success" href="/task/finishtask/{{id}}">Finalizar</a>
+                        <li class="list-group-item"> </li>
+                        <li class="list-group-item">
+                            <p><strong>Agregado hace:</strong> {{timeago create_at }}</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>Te quedan:</strong> 7 dias para terminar</p>
+                        </li>
+                        {{#if complete}}
+                        <li class="list-group-item">
+                            <p class="text-success"><strong>Estado:</strong> Completado</p>
+                        </li>
+                        {{else}}
+                        <a class="btn btn-success" href="/task/finishtask/{{id}}">Finalizar</a>
+                        {{/if}}
+                    </ul>   
                 </div>
             </div>
             {{else}}
-                <div class="col-md-8 mx-auto">
-                    <div class="card card body tex-center">
-                        <center><p><strong>Esta asignatura aun no tiene apuntes, crea uno!</strong></p></center>
-                        <a class="btn btn-success" href="/add/{{idsignature}}">Crear ahora</a>
-                    </div>
+            <div class="col-md-8 mx-auto">
+                <div class="card card body tex-center">
+                    <center>
+                        <p><strong>Esta asignatura aun no tiene apuntes, crea uno!</strong></p>
+                    </center>
+                    <a class="btn btn-success" href="/add/{{idsignature}}">Crear ahora</a>
+                </div>
             </div>
-    {{/each}}
-  </div>
-</div>
-
+            {{/each}}
+        </div>
+    </div>
