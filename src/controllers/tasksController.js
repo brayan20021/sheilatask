@@ -62,7 +62,7 @@ class tasksController {
 
         }
 
-
+        
     }
 
     async post_deletesignature(req, res) {
@@ -146,11 +146,11 @@ class tasksController {
 
     }
 
-    async deletenote(req, res) {
+    async post_deletenote(req, res) {
 
         try {
 
-            const { id } = req.params
+            const id = req.body.data
             const signatureid = await pool.query('SELECT * from tasks where id = ?', [id])
             await pool.query('UPDATE tasks SET eliminado = 1 where id = ?', [id]);
             req.flash('success', 'Tarea removida correctamente');
