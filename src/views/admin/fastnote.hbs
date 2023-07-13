@@ -1,17 +1,17 @@
 <div class="container p-4">
     <div class="row">
         <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Asignaturas registradas</h3>
+            <h3>Notas rapidas</h3>
         </div>
         <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a type="button" class="btn btn-warning" href="/signature">
-                            volver
+                        volver 
                         </a> </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <a type="button" class="btn btn-primary" href="/add/{{idsignature}}">
-                            Agregar notas
+                        <a type="button" class="btn btn-primary" href="/add-fast-notes">
+                            Agregar nota rapida
                         </a>
                     </li>
                 </ol>
@@ -21,7 +21,7 @@
 
     <div class="container p-4">
         <div class="row">
-            {{#each signature}}
+            {{#each datos}}
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-body">
@@ -47,27 +47,17 @@
                         <li class="list-group-item">
                             <p><strong>Agregado hace:</strong> {{timeago create_at }}</p>
                         </li>
-                        <li class="list-group-item">
-                            <p><strong>Te quedan:</strong> 7 dias para terminar</p>
-                        </li>
-                        {{#if complete}}
-                        <li class="list-group-item">
-                            <p class="text-success"><strong>Estado:</strong> Completado</p>
-                        </li>
-                        {{else}}
-                        <a class="btn btn-success" href="/task/finishtask/{{id}}">Finalizar</a>
-                        {{/if}}
-                    </ul>
+                    </ul>   
                 </div>
             </div>
             {{else}}
             <div class="col-md-8 mx-auto">
-                <center>
-                <p><strong>Esta asignatura aun no tiene apuntes, crea uno!</strong></p>
-                <a class="btn btn-success" href="/add/{{idsignature}}">Crear ahora</a>
+                
+                    <center>
+                        <p><strong>Aun no tiene apuntes, crea uno!</strong></p>
+                    </center>
+                    
             </div>
-            </center>
-
             {{/each}}
         </div>
     </div>

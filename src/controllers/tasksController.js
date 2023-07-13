@@ -77,7 +77,6 @@ class tasksController {
 
         }
 
-
     }
 
     async showsignature(req, res) {
@@ -156,7 +155,6 @@ class tasksController {
             req.flash('success', 'Tarea removida correctamente');
             res.redirect(`/signaturelist/${signatureid[0].subject_id}`);
 
-
         } catch (error) {
 
             res.render('./partials/errorserver');
@@ -202,7 +200,6 @@ class tasksController {
         res.redirect(`/signaturelist/${signature}`)
 
     }
-
 
 }
 

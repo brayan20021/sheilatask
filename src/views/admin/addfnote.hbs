@@ -1,0 +1,41 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-12 col-md-6 order-md-1 order-last">
+            <h1>Agregar nota rapida</h1>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a type="button" class="btn btn-warning" href="/fast-notes">
+                        volver
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+<div class="container p-12">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/add-fast-notes" method="post">
+                    .<div class="mb-3">
+                      <input type="text" name="title" id="" class="form-control" placeholder="Title" aria-describedby="helpId">
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                          <textarea class="form-control" name="description" id="" rows="3" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">guardar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

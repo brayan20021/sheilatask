@@ -9,7 +9,6 @@ const pool = require('../database')
 const { isLoggetIn } = require('../lib/auth')
 
 
-
 router.get('/dashboard', isLoggetIn, taksClass.dashboard);
 
 router.get('/signature', isLoggetIn, taksClass.signature);

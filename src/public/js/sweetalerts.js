@@ -136,10 +136,3 @@ function modifysignature(id) {
   });
 
 }
-
-
-/* Swal.fire({
-  title: `No puedes dejarlo vacio`,
-  text: 'Debes escribir al menos una letra',
-  icon: 'danger'
-}); */
