@@ -6,6 +6,12 @@ const fastnoteController = require('../controllers/fastnoteController');
 
 const fastnoteClass = new fastnoteController();
 
+router.get('/api/endpoint', (req, res) => {
+    const responseData = { message: 'Respuesta desde node JSs' };
+
+    // Envia la respuesta al cliente
+    res.json(responseData);
+})
 
 router.get('/fast-notes', isLoggetIn, fastnoteClass.showfastnote);
 

@@ -1,0 +1,58 @@
+.date-input-container {
+    position: relative;
+    width: 200px;
+  }
+  
+  .date-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .date-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+  
+  .circle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #8cacec;
+    z-index: 1;
+    transition: all 0.3s ease;
+  }
+  
+  .date-input:focus + .date-label,
+  .date-input:not(:placeholder-shown) + .date-label {
+    font-size: 12px;
+    top: 0;
+    transform: translateY(0);
+    background-color: #fff;
+    padding: 0 4px;
+  }
+  
+  .date-input:focus + .circle,
+  .date-input:not(:placeholder-shown) + .circle {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  
