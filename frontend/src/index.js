@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
+import { UserProvider } from './UserContext';
 /* import reportWebVitals from './reportWebVitals'; */
 
 
@@ -15,11 +16,13 @@ import './assets/css/pages/auth.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <AuthProvider>
-      <App />
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <UserProvider>
+        <Router>
+          <App />
+        </Router>
+      </UserProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

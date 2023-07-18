@@ -1,30 +1,41 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
+import { UserContext } from '../UserContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const { setToken } = useContext(AuthContext);
+  const { setUser } = useContext(UserContext);
+  let userGlobal = null;
 
   const loginUser = async (e) => {
     e.preventDefault();
-
+  
+    let userData; // Variable para almacenar los datos del usuario
+  
     try {
       const response = await axios.post('http://localhost:4000/signin', {
         username,
         password
       });
-
+  
       if (response.data.success) {
         // Inicio de sesión exitoso
         setMessage('Inicio de sesión exitoso');
         setToken(response.data.token);
         const token = response.data.token;
+        const userData = response.data.userData // Almacenar solo el nombre y el ID del usuario
+        console.log(userData);
+        setUser(userData)
+  
+        // Actualizar el estado del usuario aquí
+  
         localStorage.setItem('token', token);
-        
-
+        localStorage.setItem('userData', JSON.stringify(userData)); // Almacenar los datos del usuario en el localStorage
+  
         // Aquí puedes redirigir al usuario al panel o realizar otras acciones necesarias
       } else {
         // Inicio de sesión fallido
@@ -35,7 +46,11 @@ const Login = () => {
       setMessage('Error en la solicitud');
       console.log(error);
     }
+  
+    setUser(userData); // Establecer los datos del usuario en el contexto
   };
+  
+
 
   return (
     <div id="auth">

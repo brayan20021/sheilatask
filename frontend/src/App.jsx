@@ -4,23 +4,19 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
-import jwtDecode from 'jwt-decode';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
-  // Verificar el estado de autenticación al cargar la aplicación
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-
     if (token) {
-
-      const decodedToken = jwtDecode(token);
-      setUser(decodedToken);
-      setIsLoggedIn(true)
-
+      // Obtener los datos del usuario del localStorage utilizando el token
+      const userData = localStorage.getItem('userData');
+      setUser(userData);
+      setIsLoggedIn(true);
     } else {
       setUser(null);
       setIsLoggedIn(false);
@@ -31,7 +27,7 @@ const App = () => {
     <div className="app">
       {isLoggedIn && <Sidebar />}
       <div id='main' className='layout-navbar'>
-        {isLoggedIn && <Header />}
+        {isLoggedIn && <Header user={user} />}
         <div id='main-content'>
           <Routes>
             <Route
