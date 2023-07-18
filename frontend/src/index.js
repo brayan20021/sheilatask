@@ -9,13 +9,34 @@ import { UserProvider } from './UserContext';
 
 
 // Importar CSS global
-//import './assets/css/style.css';
+
 import './assets/css/bootstrap.css';
 import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
 import './assets/css/app.css';
 import './assets/css/pages/auth.css';
 
+import './assets/vendors/iconly/bold.css';
+import './assets/vendors/perfect-scrollbar/perfect-scrollbar.css';
+import './assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js';
+import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
+import './assets/css/personalizado.css';
+import './assets/vendors/sweetalert2/sweetalert2.min.css';
+import './assets/vendors/fontawesome/all.min.js'; 
+/* import './assets/js/bootstrap.bundle.min.js'; */
 
+import './assets/vendors/sweetalert2/sweetalert2.all.min.js';
+import './assets/vendors/apexcharts/apexcharts.js';
+import './assets/js/sweetalerts.js';
+import './assets/js/jquery.min.js'; 
+/*
+import './assets/js/main.js';
+
+import './assets/js/extensions/sweetalert2.js';
+
+
+import './assets/js/pages/dashboard.js';
+
+*/
 
 
 ReactDOM.render(

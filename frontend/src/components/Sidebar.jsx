@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { initializeDOMManipulation } from './domManipulation';
+import PerfectScrollbar from 'perfect-scrollbar';
+import { logo } from '../assets'; 
+
 
 const Sidebar = () => {
+  
 
   const [activeItem, setActiveItem] = useState('dashboard');
 
   const handleItemClick = (item) => {
     setActiveItem(item);
   };
+
+    useEffect(() => {
+      initializeDOMManipulation();
+    }, []);
+
+    
 
   return (
 
@@ -16,7 +27,7 @@ const Sidebar = () => {
         <div className="sidebar-header">
           <div className="d-flex justify-content-between">
             <div className="logo">
-              <Link to="/"><img src="/images/logo/logo.png" alt="Logo" style={{ height: '50%' }} /></Link>
+              <Link to="/"><img src={logo} alt="Logo" style={{ height: '50%' }} /></Link>
             </div>
             <div className="toggler">
               <a href="#" className="sidebar-hide d-xl-none d-block"><i className="bi bi-x bi-middle"></i></a>
