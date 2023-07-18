@@ -1,4 +1,5 @@
-//import PerfectScrollbar from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar';
+
 export function initializeDOMManipulation() {
     const slideToggle = (t, e, o) => {
         if (t.clientHeight === 0) {
@@ -120,12 +121,12 @@ export function initializeDOMManipulation() {
 
     // Perfect Scrollbar Init
     // Perfect Scrollbar Init
-   /*  if (typeof PerfectScrollbar === 'function') {
+    if (typeof PerfectScrollbar === 'function') {
         const container = document.querySelector('.sidebar-wrapper');
         const ps = new PerfectScrollbar(container, {
             wheelPropagation: false,
         });
-    } */
+    }
 
     // Scroll into active sidebar
     document.querySelector('.sidebar-item.active').scrollIntoView(false);
