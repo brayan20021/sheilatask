@@ -9,10 +9,14 @@ import { UserProvider } from './UserContext';
 
 
 // Importar CSS global
+//import './assets/css/style.css';
 import './assets/css/bootstrap.css';
 import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
 import './assets/css/app.css';
 import './assets/css/pages/auth.css';
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>

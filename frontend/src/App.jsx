@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Login from './components/Login';
+import Login from './components/auth/Login';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import Signature from './components/Signature';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +42,11 @@ const App = () => {
             <Route
               path="/dashboard"
               element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" replace />}
+            />
+
+            <Route
+              path="/signature"
+              element={isLoggedIn ? <Signature /> : <Navigate to="/login" replace />}
             />
             {/* Agrega más rutas según tus necesidades */}
           </Routes>
