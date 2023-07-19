@@ -23,7 +23,7 @@ router.get('/add/:signatureid', isLoggetIn, taksClass.addnote);
 
 router.post('/add/:signatureid', isLoggetIn, taksClass.post_addnote);
 
-router.get('/signaturelist/:idsignature', isLoggetIn, taksClass.showsignature);
+router.post('/signaturelist/:idsignature', isLoggetIn, taksClass.showsignature);
 
 router.post('/signaturelist/task/delete/:id', isLoggetIn, taksClass.post_deletenote);
 

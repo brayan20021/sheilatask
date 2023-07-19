@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const Signature = ({ user }) => {
   const userData = JSON.parse(user);
   const idUser = userData.id;
@@ -69,7 +69,9 @@ const Signature = ({ user }) => {
                             <button className="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modificar Asignatura">
                               <span className="fa-fw select-all fas"></span>
                             </button>
-                            | <a className="btn btn-success" href={`/signaturelist/${sig.id}`}>Ver apuntes</a>
+                            | <Link to={`/signaturelist/${sig.id}`}> <button className="btn btn-success"> 
+
+                            Ver apuntes</button></Link>
                           </td>
                         </tr>
                       ))}

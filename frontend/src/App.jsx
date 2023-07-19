@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Signature from './components/Signature';
+import SignatureList from './components/SignatureList';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
     <div className="app">
       {isLoggedIn && <Sidebar />}
       <div id='main' className='layout-navbar'>
-        {isLoggedIn && <Header user = { user } />}
+        {isLoggedIn && <Header user={user} />}
         <div id='main-content'>
           <Routes>
             <Route
@@ -39,17 +40,25 @@ const App = () => {
               path="/login"
               element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Login setIsLoggedIn={setIsLoggedIn} />}
             />
+
+            <Route
+              path="/signature"
+              element={isLoggedIn ? <Signature user={user} /> : <Navigate to="/login" replace />}
+            />
+
+            <Route
+              path="/signaturelist/:id" // Corregido: añade "/:id" al final del path
+              element={isLoggedIn ? <SignatureList user = { user}/> : <Navigate to="/login" replace />}
+            />
+
             <Route
               path="/dashboard"
               element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" replace />}
             />
 
-            <Route
-              path="/signature"
-              element={isLoggedIn ? <Signature user = { user }/> : <Navigate to="/login" replace />}
-            />
             {/* Agrega más rutas según tus necesidades */}
           </Routes>
+
         </div>
       </div>
     </div>

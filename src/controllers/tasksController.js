@@ -85,7 +85,7 @@ class tasksController {
 
         try {
 
-            const { idsignature } = req.params
+            const { idsignature } = req.body
             const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? order by complete', [idsignature]);
 
             res.render('./admin/signaturelist', { signature: signature, idsignature });
