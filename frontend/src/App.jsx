@@ -47,7 +47,7 @@ const App = () => {
             />
 
             <Route
-              path="/signaturelist/:id" // Corregido: añade "/:id" al final del path
+              path="/signaturelist/:idsignature" // Corregido: añade "/:id" al final del path
               element={isLoggedIn ? <SignatureList user = { user}/> : <Navigate to="/login" replace />}
             />
 

@@ -88,7 +88,9 @@ class tasksController {
             const { idsignature } = req.body
             const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? order by complete', [idsignature]);
 
-            res.render('./admin/signaturelist', { signature: signature, idsignature });
+            return res.status(200).json(signature);
+
+            //res.render('./admin/signaturelist', { signature: signature, idsignature });
 
         } catch (error) {
 
@@ -97,6 +99,14 @@ class tasksController {
 
         }
 
+    }
+
+    async showTextsignature(req, res){
+
+        const {idsignature} = req.body
+        const text_signature = await pool.query('Select description from tasks where id = ?', [idsignature]);
+
+        return res.status(200).json(text_signature)
     }
 
     async addnote(req, res) {
@@ -121,6 +131,8 @@ class tasksController {
         }
 
     }
+
+
 
     async post_editnote(req, res) {
 
