@@ -11,7 +11,7 @@ const { isLoggetIn } = require('../lib/auth')
 
 router.get('/dashboard', isLoggetIn, taksClass.dashboard);
 
-router.get('/signature', isLoggetIn, taksClass.signature);
+router.post('/signature', taksClass.signature);
 
 router.post('/add-signature', isLoggetIn, taksClass.post_addsignature);
 

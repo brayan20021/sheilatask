@@ -28,7 +28,7 @@ const App = () => {
     <div className="app">
       {isLoggedIn && <Sidebar />}
       <div id='main' className='layout-navbar'>
-        {isLoggedIn && <Header user={user} />}
+        {isLoggedIn && <Header user = { user } />}
         <div id='main-content'>
           <Routes>
             <Route
@@ -46,7 +46,7 @@ const App = () => {
 
             <Route
               path="/signature"
-              element={isLoggedIn ? <Signature /> : <Navigate to="/login" replace />}
+              element={isLoggedIn ? <Signature user = { user }/> : <Navigate to="/login" replace />}
             />
             {/* Agrega más rutas según tus necesidades */}
           </Routes>

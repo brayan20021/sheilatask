@@ -1,22 +1,23 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-const Signature = () => {
-  // Datos ficticios para la lista de asignaturas
-  const signatureList = [
-    { id: 1, name: 'Asignatura 1', total_task: 10 },
-    { id: 2, name: 'Asignatura 2', total_task: 5 },
-    { id: 3, name: 'Asignatura 3', total_task: 7 },
-  ];
+const Signature = ({ user }) => {
+  const userData = JSON.parse(user);
+  const idUser = userData.id;
+  const [signature, setSignature] = useState([]);
 
-  const deleteSignature = (id) => {
-    // Lógica para eliminar la asignatura con el ID proporcionado
-    console.log(`Eliminar asignatura con ID: ${id}`);
-  };
+  useEffect(() => {
+    const fetchSignature = async () => {
+      try {
+        const response = await axios.post('http://localhost:4000/signature', { idUser });
+        setSignature(response.data);
+      } catch (error) {
+        console.log('Lo sentimos, ha ocurrido un error en la solicitud');
+      }
+    };
 
-  const modifySignature = (id) => {
-    // Lógica para modificar la asignatura con el ID proporcionado
-    console.log(`Modificar asignatura con ID: ${id}`);
-  };
+    fetchSignature();
+  }, [idUser]);
 
   return (
     <div className="container p-4">
@@ -56,19 +57,19 @@ const Signature = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {signatureList.map((signature) => (
-                        <tr key={signature.id}>
-                          <td className="text-bold-500">{signature.name}</td>
-                          <td className="text-bold-500">{signature.total_task}</td>
+                      {signature.map((sig) => (
+                        <tr key={sig.id}>
+                          <td className="text-bold-500">{sig.name}</td>
+                          <td className="text-bold-500">{sig.total_task}</td>
                           <td>Remote</td>
                           <td>
-                            <button className="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Asignatura" onClick={() => deleteSignature(signature.id)}>
+                            <button className="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Asignatura">
                               <span className="fa-fw select-all fas"></span>
                             </button> |
-                            <button className="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modificar Asignatura" onClick={() => modifySignature(signature.id)}>
+                            <button className="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modificar Asignatura">
                               <span className="fa-fw select-all fas"></span>
                             </button>
-                            | <a className="btn btn-success" href={`/signaturelist/${signature.id}`}>Ver apuntes</a>
+                            | <a className="btn btn-success" href={`/signaturelist/${sig.id}`}>Ver apuntes</a>
                           </td>
                         </tr>
                       ))}

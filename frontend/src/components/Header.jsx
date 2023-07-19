@@ -1,4 +1,5 @@
 import React from 'react';
+import { face } from '../assets';
 
 const Header = ({ user }) => {
 
@@ -53,7 +54,7 @@ const Header = ({ user }) => {
                                     </div>
                                     <div className="user-img d-flex align-items-center">
                                         <div className="avatar avatar-md">
-                                            <img src="assets/images/faces/1.jpg" alt="User Avatar" />
+                                            <img src={face} alt="User Avatar"/>
                                         </div>
                                     </div>
                                 </div>

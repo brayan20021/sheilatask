@@ -12,13 +12,15 @@ class tasksController {
     async signature(req, res) {
 
         try {
-
-            const user = req.user.id;
+            const { idUser } = req.body
+             
             const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
                 right join subjects on subjects.id = tasks.subject_id
-                where subjects.user_id = ${user} and removed = 0 group by name;
-                `);
-            res.render('./admin/subject', { signature: signature });
+                where subjects.user_id = ${idUser} and removed = 0 group by name;
+                `); 
+              
+            return res.status(200).json(signature);
+            //res.render('./admin/subject', { signature: signature });
 
         } catch (error) {
 
@@ -62,7 +64,7 @@ class tasksController {
 
         }
 
-        
+
     }
 
     async post_deletesignature(req, res) {
