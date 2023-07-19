@@ -104,7 +104,7 @@ class tasksController {
     async showTextsignature(req, res){
 
         const {idsignature} = req.body
-        const text_signature = await pool.query('Select description from tasks where id = ?', [idsignature]);
+        const text_signature = await pool.query('Select description, title from tasks where id = ?', [idsignature]);
 
         return res.status(200).json(text_signature)
     }

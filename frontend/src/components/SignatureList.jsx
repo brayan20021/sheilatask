@@ -13,7 +13,7 @@ const SignatureList = ({ user }) => {
     const { idsignature } = useParams();
     //console.log(idsignature)
     const [signature, setSignature] = useState([]);
-    const [signature_text, setSignaturetext] = useState([]);
+    const [signature_text, setSignaturetext] = useState([1]);
     //console.log(user)
     useEffect(() => {
         const fetchSignature = async () => {
@@ -42,14 +42,18 @@ const SignatureList = ({ user }) => {
             })
             //console.log(response.data)
             setSignaturetext(response.data)
-
         } catch (error) {
-
             console.log('Lo sentimos, ha ocurrido un error en la solicitud');
-
         }
-
     }
+
+    const [activeItem, setActiveItem] = useState('dashboard');
+
+    const handleItemClick = (item) => {
+        setActiveItem(item);
+    };
+
+    console.log(signature_text)
 
     return (
         <div className="row">
@@ -70,9 +74,13 @@ const SignatureList = ({ user }) => {
                                                         <table class="table table-lg">
                                                             <tbody>
                                                                 {signature.map((signat) => (
-                                                                    <a className="nav-link active" id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
-                                                                        textSignature(signat.id)
-                                                                    }}> <tr><td class="text-bold-500">{signat.title}</td></tr></a>
+                                                                    <a className={activeItem === `${signat.title}`
+                                                                        ? "nav-link active"
+                                                                        : "nav-link"}
+                                                                        id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
+                                                                            textSignature(signat.id)
+                                                                            setActiveItem(signat.title)
+                                                                        }}> <tr><td class="text-bold-500">{signat.title}</td></tr></a>
                                                                 ))}
                                                             </tbody>
                                                         </table>
@@ -81,6 +89,7 @@ const SignatureList = ({ user }) => {
                                             </div>
                                             <div className="col-9">
                                                 <div className="tab-content" id="v-pills-tabContent">
+                                                    <h1>{signature_text[0].title}</h1>
                                                     <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                                         <p>{signature_text[0].description}</p>
                                                     </div>
