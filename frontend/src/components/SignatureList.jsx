@@ -64,7 +64,7 @@ const SignatureList = ({ user }) => {
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h4 className="card-title">Javascript Behavior</h4>
+                                        <h4 className="card-title">Registros</h4>
                                     </div>
                                     <div className="card-body">
                                         <div className="row">
@@ -80,7 +80,7 @@ const SignatureList = ({ user }) => {
                                                                         id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                                                                             textSignature(signat.id)
                                                                             setActiveItem(signat.title)
-                                                                        }}> <tr><td class="text-bold-500">{signat.title}</td></tr></a>
+                                                                        }}> <tr><td style={{width: "300px", maxWidth: "300px"}} class="text-bold-500">{signat.title}</td></tr></a>
                                                                 ))}
                                                             </tbody>
                                                         </table>
@@ -89,10 +89,20 @@ const SignatureList = ({ user }) => {
                                             </div>
                                             <div className="col-9">
                                                 <div className="tab-content" id="v-pills-tabContent">
-                                                    <h1>{signature_text[0].title}</h1>
-                                                    <div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                                        <p>{signature_text[0].description}</p>
-                                                    </div>
+                                                    <table className="table table-bordered mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <h2>{signature_text[0].title}</h2>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style={{ height: '300px' }}>
+                                                            <tr>
+                                                               <p className="text-bold-500">{signature_text[0].description}</p> 
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>

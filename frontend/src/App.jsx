@@ -25,11 +25,19 @@ const App = () => {
     }
   }, []);
 
+  const logout = () => {
+    // Eliminar el token del local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    // Actualizar el estado para indicar que el usuario ha cerrado sesión
+    setIsLoggedIn(false);
+  };
+
   return (
     <div className="app">
       {isLoggedIn && <Sidebar />}
       <div id='main' className='layout-navbar'>
-        {isLoggedIn && <Header user={user} />}
+        {isLoggedIn && <Header user={user} onLogout={logout} />}
         <div id='main-content'>
           <Routes>
             <Route

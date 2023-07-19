@@ -1,7 +1,7 @@
 import React from 'react';
 import { face } from '../assets';
 
-const Header = ({ user }) => {
+const Header = ({ user, onLogout  }) => {
 
     //console.log(JSON.parse(user))
     const userData = JSON.parse(user)
@@ -69,7 +69,7 @@ const Header = ({ user }) => {
                                 <li>
                                     <hr className="dropdown-divider" />
                                 </li>
-                                <li><a className="dropdown-item" href="#"><i className="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                <li><button className="dropdown-item" onClick={onLogout}><i className="icon-mid bi bi-box-arrow-left me-2"></i> Logout</button></li>
                             </ul>
                         </div>
                     </div>

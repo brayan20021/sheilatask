@@ -22,7 +22,7 @@ import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
 import './assets/css/personalizado.css';
 import './assets/vendors/sweetalert2/sweetalert2.min.css';
 import './assets/vendors/fontawesome/all.min.js'; 
-/* import './assets/js/bootstrap.bundle.min.js'; */
+ import './assets/js/bootstrap.bundle.min.js'; 
 
 import './assets/vendors/sweetalert2/sweetalert2.all.min.js';
 import './assets/vendors/apexcharts/apexcharts.js';
