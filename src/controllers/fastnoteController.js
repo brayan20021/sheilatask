@@ -7,17 +7,26 @@ class fastnoteController {
 
         try {
 
-            const user = req.user.id;
+            const { idUser } = req.body;
 
-            const fastnotes = await pool.query(`select * from fastnotes where user_id = ${user} and removed = 0;`);
-            console.log(fastnotes)
-            res.render('./admin/fastnote', { datos: fastnotes });
+            const notes = await pool.query(`select * from fastnotes where user_id = ? and removed = 0;`, [idUser]);
+
+            return res.status(200).json(notes)
 
 
         } catch (error) {
             console.log(error)
             res.render('./partials/errorserver');
         }
+
+    }
+
+    async show_description(req, res){
+
+        const { idnote } = req.body
+        const text_signature = await pool.query('Select description, title from fastnotes where id = ?', [idnote]);
+
+        return res.status(200).json(text_signature)
 
     }
 

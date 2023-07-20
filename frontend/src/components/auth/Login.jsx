@@ -2,65 +2,67 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../AuthContext';
 import { UserContext } from '../../UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const { setToken } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
-  let userGlobal = null;
+  const navigate = useNavigate();
 
   const loginUser = async (e) => {
     e.preventDefault();
-  
+
     let userData; // Variable para almacenar los datos del usuario
-  
+
     try {
       const response = await axios.post('http://localhost:4000/signin', {
         username,
         password
       });
-  
+
       if (response.data.success) {
         // Inicio de sesión exitoso
         setMessage('Inicio de sesión exitoso');
         setToken(response.data.token);
         const token = response.data.token;
-        const userData = response.data.userData // Almacenar solo el nombre y el ID del usuario
+        const userData = response.data.userData // Store only the user's name and ID
         console.log(userData);
         setUser(userData)
-  
-        // Actualizar el estado del usuario aquí
-  
+
         localStorage.setItem('token', token);
-        localStorage.setItem('userData', JSON.stringify(userData)); // Almacenar los datos del usuario en el localStorage
-  
-        // Aquí puedes redirigir al usuario al panel o realizar otras acciones necesarias
+        localStorage.setItem('userData', JSON.stringify(userData)); // Store user data in localStorage
+
+        // Update user state here
+        navigate('/dashboard')
+        window.location.reload()
+
+
       } else {
-        // Inicio de sesión fallido
+        // Login failed
         setMessage(response.data.message);
       }
     } catch (error) {
-      // Error en la solicitud
+      // Request failed
       setMessage('Error en la solicitud');
       console.log(error);
     }
-  
+
     setUser(userData); // Establecer los datos del usuario en el contexto
   };
-  
+
 
 
   return (
+
     <div id="auth">
       <div className="row h-100">
         <div className="col-lg-5 col-12">
           <div id="auth-left">
-            <div className="auth-logo"></div>
-            <h1 className="auth-title">Log in.</h1>
-            <p className="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
-
+            <h1 className="auth-title">Log in.</h1> <br />
             <form onSubmit={loginUser}>
               <div className="form-group position-relative has-icon-left mb-4">
                 <input

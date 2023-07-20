@@ -13,7 +13,9 @@ router.get('/api/endpoint', (req, res) => {
     res.json(responseData);
 })
 
-router.get('/fast-notes', isLoggetIn, fastnoteClass.showfastnote);
+router.post('/fast-notes', fastnoteClass.showfastnote);
+
+router.post('/fast-notes-description', fastnoteClass.show_description);
 
 router.get('/add-fast-notes', isLoggetIn, fastnoteClass.addfastnote);
 

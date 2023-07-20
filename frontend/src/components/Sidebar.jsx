@@ -47,6 +47,18 @@ const Sidebar = () => {
               </Link>
             </li>
 
+            <li className={`${activeItem === "notes"
+              ? "sidebar-item active"
+              : "sidebar-item"}`}
+              onClick={() => {
+                handleItemClick('notes')
+              }}>
+              <Link to="/notes" className="sidebar-link">
+                <i className="bi bi-collection-fill"></i>
+                <span>Notes</span>
+              </Link>
+            </li>
+
             <li className={`${activeItem === "signature"
               ? "sidebar-item active"
               : "sidebar-item"}`}
@@ -57,25 +69,6 @@ const Sidebar = () => {
                 <i className="bi bi-collection-fill"></i>
                 <span>Asignaturas</span>
               </Link>
-            </li>
-
-            <li
-              className={`${activeItem === "notes"
-                ? "sidebar-item has-sub active"
-                : "sidebar-item has-sub"}`}
-              onClick={() => { handleItemClick("notes") }}>
-              <a href="#" className="sidebar-link">
-                <i className="bi bi-stack"></i>
-                <span>Notas</span>
-              </a>
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <Link to="/fast-notes">Listas</Link>
-                </li>
-                <li className="submenu-item">
-                  <Link to="/completed-tasks">Tareas finalizadas</Link>
-                </li>
-              </ul>
             </li>
 
             <li className={`${activeItem === "config"
