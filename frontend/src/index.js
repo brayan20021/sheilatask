@@ -21,13 +21,19 @@ import './assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js';
 import './assets/vendors/bootstrap-icons/bootstrap-icons.css';
 import './assets/css/personalizado.css';
 import './assets/vendors/sweetalert2/sweetalert2.min.css';
-import './assets/vendors/fontawesome/all.min.js'; 
- import './assets/js/bootstrap.bundle.min.js'; 
+import './assets/vendors/fontawesome/all.min.js';
+import './assets/js/bootstrap.bundle.min.js';
+import './assets/css/pages/dripicons.css';
+import './assets/vendors/dripicons/webfont.css';
+import './assets/vendors/tinymce/skins/ui/oxide/skin.min.css';
+import './assets/vendors/tinymce/tinymce.min.js';
+ import './assets/vendors/tinymce/plugins/code/plugin.min.js'; 
+
 
 import './assets/vendors/sweetalert2/sweetalert2.all.min.js';
 import './assets/vendors/apexcharts/apexcharts.js';
 import './assets/js/sweetalerts.js';
-import './assets/js/jquery.min.js'; 
+import './assets/js/jquery.min.js';
 /*
 import './assets/js/main.js';
 

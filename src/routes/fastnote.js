@@ -17,8 +17,6 @@ router.post('/fast-notes', fastnoteClass.showfastnote);
 
 router.post('/fast-notes-description', fastnoteClass.show_description);
 
-router.get('/add-fast-notes', isLoggetIn, fastnoteClass.addfastnote);
-
-router.post('/add-fast-notes', isLoggetIn, fastnoteClass.post_addfastnote);
+router.post('/add-fast-notes', fastnoteClass.post_addfastnote);
 
 module.exports = router;

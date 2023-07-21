@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 
+
 const Note = ({ user }) => {
 
     const userData = JSON.parse(user);
@@ -26,14 +27,14 @@ const Note = ({ user }) => {
 
 
     }, [idUser]);
- 
+
 
 
     const textSignature = async (idnote) => {
 
         try {
 
-            const response = await axios.post('http://localhost:4000/fast-notes-description', {
+            const response = await axios.post('http://localhost:4000/add-fast-notes', {
                 idnote
             })
             console.log(response.data)
@@ -41,7 +42,7 @@ const Note = ({ user }) => {
         } catch (error) {
             console.log('Lo sentimos, ha ocurrido un error en la solicitud');
         }
-    } 
+    }
 
     const [activeItem, setActiveItem] = useState('dashboard');
 
@@ -52,7 +53,15 @@ const Note = ({ user }) => {
     console.log(signature_text)
 
     return (
+
         <div className="row">
+            <div>
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link className="btn btn-success" to="/addnote">Agregar</Link></li>
+                    </ol>
+                </nav>
+            </div>
             <div className="col-md-12 mx-auto">
                 <div className="card text-center">
                     <section className="section">
@@ -69,15 +78,16 @@ const Note = ({ user }) => {
                                                     <div className="table-responsive">
                                                         <table class="table table-lg">
                                                             <tbody>
-                                                                 {signature.map((signat) => (
+
+                                                                {signature.map((signat) => (
                                                                     <a className={activeItem === `${signat.title}`
                                                                         ? "nav-link active"
                                                                         : "nav-link"}
                                                                         id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                                                                             textSignature(signat.id)
                                                                             setActiveItem(signat.title)
-                                                                        }}> <tr><td style={{width: "300px", maxWidth: "300px"}} class="text-bold-500">{signat.title}</td></tr></a>
-                                                                ))} 
+                                                                        }}> <tr><td style={{ width: "300px", maxWidth: "300px" }} className="text-bold-500">{signat.title}</td></tr></a>
+                                                                ))}
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -95,7 +105,7 @@ const Note = ({ user }) => {
                                                         </thead>
                                                         <tbody style={{ height: '300px' }}>
                                                             <tr>
-                                                               <p className="text-bold-500">{signature_text[0].description}</p> 
+                                                                <p className="text-bold-500">{signature_text[0].description}</p>
                                                             </tr>
                                                         </tbody>
                                                     </table>

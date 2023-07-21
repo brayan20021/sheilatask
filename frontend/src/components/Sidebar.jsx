@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { initializeDOMManipulation } from './domManipulation';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { logo } from '../assets'; 
+import { logo } from '../assets';
 
 
 const Sidebar = () => {
-  
+
 
   const [activeItem, setActiveItem] = useState('dashboard');
 
@@ -14,11 +14,11 @@ const Sidebar = () => {
     setActiveItem(item);
   };
 
-    useEffect(() => {
-      initializeDOMManipulation();
-    }, []);
+  useEffect(() => {
+    initializeDOMManipulation();
+  }, []);
 
-    
+
 
   return (
 
@@ -36,7 +36,16 @@ const Sidebar = () => {
         </div>
         <div className="sidebar-menu">
           <ul className="menu">
-            <li className="sidebar-title">Menu</li>
+            <li className={`${activeItem === "nuevo"
+              ? "sidebar-item "
+              : "sidebar-item"}`}
+              onClick={() => {
+                handleItemClick('nuevo')
+              }}>
+              <Link to="/addnotes" className="sidebar-link btn btn-outline-success text-blue">
+                <div class="icon dripicons-document-edit"><span >Nuevo</span></div>
+              </Link>
+            </li>
             <li className={`${activeItem === 'dashboard'
               ? "sidebar-item active"
               : "sidebar-item"}`}
@@ -55,7 +64,7 @@ const Sidebar = () => {
               }}>
               <Link to="/notes" className="sidebar-link">
                 <i className="bi bi-collection-fill"></i>
-                <span>Notes</span>
+                <span>Notas</span>
               </Link>
             </li>
 

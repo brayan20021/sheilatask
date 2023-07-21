@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Signature from './components/Signature';
 import SignatureList from './components/SignatureList';
 import Note from './components/Notes';
+import Addnote from './components/Addnotes';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -77,6 +78,11 @@ const App = () => {
             <Route
               path="/notes"
               element={isLoggedIn ? <Note user={user} /> : <Navigate to="/login" replace />}
+            />
+
+            <Route
+              path="/addnotes"
+              element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
             />
 
 

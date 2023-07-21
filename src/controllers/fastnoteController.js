@@ -9,7 +9,7 @@ class fastnoteController {
 
             const { idUser } = req.body;
 
-            const notes = await pool.query(`select * from fastnotes where user_id = ? and removed = 0;`, [idUser]);
+            const notes = await pool.query(`select * from fastnotes where user_id = ? and removed = 0 group by id desc;`, [idUser]);
 
             return res.status(200).json(notes)
 
@@ -30,20 +30,13 @@ class fastnoteController {
 
     }
 
-    async addfastnote(req, res) {
-
-        res.render('./admin/addfnote');
-
-    }
 
     async post_addfastnote(req, res) {
 
         try {
 
-            const user_id = req.user.id;
-            console.log(user_id)
-            const { title, description } = req.body;
-
+            const {idUser, title, description} = req.body
+            const user_id = idUser
             const data = {
 
                 title,
@@ -55,7 +48,8 @@ class fastnoteController {
 
             await pool.query('insert into fastnotes set ?', [data]);
 
-            res.redirect('/fast-notes');
+            const confirmationCode = 1048;
+            res.status(200).json(confirmationCode)
 
 
         } catch (error) {
