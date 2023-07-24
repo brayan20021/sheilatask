@@ -1,29 +1,153 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
+const Dashboard = ({ user }) => {
 
-const Dashboard = () => {
+  const userData = JSON.parse(user)
+  const idUser = userData.id;
+  const [lastnote, setLastnote] = useState([])
+  const [totalNote, setTotalNote] = useState([])
+  
 
-  return (
-   
-    <div className="row">
-      <div className="col-md-12 mx-auto">
-        <div className="card text-center">
-          <div className="card-body">
-            <h3>Bienvenido(a) a nuestro proyecto web </h3>
-            <h6>
-              Es normal que en medio de tanta teoría se nos escapen informaciones...
-              <br />
-              No te preocupes si a veces se te escapan algunas informaciones,
-              <br />
-              ¡estamos aquí para recordártelo!
-            </h6>
-            <a href="/dashboard" className="btn btn-success">Empezar</a>
-          </div>
+  useEffect(() => {
+    
+    const dashboardNotes = async () => {
+
+      try {
+
+        const response = await axios.post('http://localhost:4000/dashboard', { idUser })
+
+        setLastnote(response.data[0])
+        setTotalNote(response.data[1])
+        
+      } catch (error) {
+        console.log('Lo sentimos, ha ocurrido un error en la solicitud');
+      }
+    }
+    dashboardNotes()
+  },[idUser])
+
+  const Card = ({  title, text }) => (
+    <div className="card">
+      <div className="card-content">
+        <div className="card-body">
+          <h4 className="card-title">{title}</h4>
+          <p className="card-text">{text}</p>
         </div>
       </div>
     </div>
+  );
 
-  
+  return (
+
+    <section className="row">
+      <div className="col-12 col-lg-9">
+        <div className="row">
+          <div className="col-6 col-lg-3 col-md-6">
+            <div className="card">
+              <div className="card-body px-3 py-4-5">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="stats-icon purple">
+                      <i className="iconly-boldShow"></i>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <h6 className="text-muted font-semibold">Total de notas</h6>
+                    <h6 className="font-extrabold mb-0">{totalNote.total}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-6 col-lg-3 col-md-6">
+            <div className="card">
+              <div className="card-body px-3 py-4-5">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="stats-icon blue">
+                      <i className="iconly-boldProfile"></i>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <h6 className="text-muted font-semibold">Finalizadas</h6>
+                    <h6 className="font-extrabold mb-0">120</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-6 col-lg-3 col-md-6">
+            <div className="card">
+              <div className="card-body px-3 py-4-5">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="stats-icon green">
+                      <i className="iconly-boldAdd-User"></i>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <h6 className="text-muted font-semibold">Recordatorios</h6>
+                    <h6 className="font-extrabold mb-0">6</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-6 col-lg-3 col-md-6">
+            <div className="card">
+              <div className="card-body px-3 py-4-5">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="stats-icon red">
+                      <i className="iconly-boldBookmark"></i>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <h6 className="text-muted font-semibold">Notas guardadas</h6>
+                    <h6 className="font-extrabold mb-0">112</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-header">
+                <h4>Ultimas notas</h4>
+              </div>
+              {lastnote.map((note) => (
+              <div className="col-12">
+              <div className="recent-message d-flex px-4 py-3">
+                <Card title={note.title} text={note.description} />
+              </div>
+            </div>
+              ))}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-12 col-lg-3">
+        <div className="card">
+          <div className="card-body py-4 px-5">
+            <div className="d-flex align-items-center">
+              <div className="avatar avatar-xl">
+                <img src="/images/faces/1.jpg" alt="Face 1" />
+              </div>
+              <div className="ms-3 name">
+                <h5 className="font-bold"></h5>
+                <h6 className="text-muted mb-0">@johnducky</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   );
 };
 

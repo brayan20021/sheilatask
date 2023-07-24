@@ -2,6 +2,22 @@ const pool = require('../database');
 
 class fastnoteController {
 
+    async dashboard(req, res) {
+
+        try {
+
+            const {idUser} = req.body;
+            const notes = await pool.query('select * from fastnotes where user_id = ? and removed = 0 order by id desc limit 5;', [idUser])
+
+            const allnote = await pool.query('select count(*) as total from fastnotes where user_id = ?', [idUser]);
+
+            res.status(200).json([notes, allnote[0]])
+
+        } catch (error) {
+            res.status(200).json("Lo sentimos, ha ocurrido un error, contacte con el administrador del sistema")
+        }
+    }
+
 
     async showfastnote(req, res) {
 
@@ -13,7 +29,6 @@ class fastnoteController {
 
             return res.status(200).json(notes)
 
-
         } catch (error) {
             console.log(error)
             res.render('./partials/errorserver');
@@ -21,10 +36,10 @@ class fastnoteController {
 
     }
 
-    async show_description(req, res){
+    async show_description(req, res) {
 
         const { idnote } = req.body
-        const text_signature = await pool.query('Select description, title from fastnotes where id = ?', [idnote]);
+        const text_signature = await pool.query('Select id, description, title from fastnotes where id = ?', [idnote]);
 
         return res.status(200).json(text_signature)
 
@@ -35,7 +50,7 @@ class fastnoteController {
 
         try {
 
-            const {idUser, title, description} = req.body
+            const { idUser, title, description } = req.body
             const user_id = idUser
             const data = {
 
@@ -53,10 +68,27 @@ class fastnoteController {
 
 
         } catch (error) {
-            console.log(error);
-            res.render('./partials/errorserver');
+            console.log(error)
 
         }
+
+    }
+
+    async editfastnote(req, res){
+
+        try {
+
+            const { idSignature } = req.body;
+            const signature = await pool.query('select id, description, title from fastnotes where id = ?', [idSignature])
+            return res.status(200).json(signature);
+            
+        } catch (error) {
+
+            console.log(error)
+            
+        }
+
+
 
     }
 

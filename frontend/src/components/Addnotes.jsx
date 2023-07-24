@@ -8,11 +8,10 @@ const Addnote = ({ user }) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const navigate = useNavigate()
-
-
     const idUser = JSON.parse(user)
-    console.log(idUser)
+
     const addNotes = async (e) => {
+
         e.preventDefault();
 
         try {
@@ -27,25 +26,24 @@ const Addnote = ({ user }) => {
             setTitle('');
             setDescription('');
 
-            if(response.data === 1048){
-                
+            if (response.data === 1048) {
+
                 Swal.fire({
                     icon: "success",
                     title: "Nota guardada exitosamente",
                     showConfirmButton: false,
                     timer: 1500,
-                  }).then(() => {
+                }).then(() => {
                     setTitle("");
                     setDescription("");
-                    navigate("/notes"); 
-                  });
+                    navigate("/notes");
+                });
 
             }
 
         } catch (error) {
             console.log('Lo sentimos, ha ocurrido un error en la solicitud');
         }
-
 
     }
 
@@ -62,13 +60,13 @@ const Addnote = ({ user }) => {
                         <form onSubmit={addNotes}>
                             <div className="card-body">
                                 <div className="card">
-                                    <input 
-                                    type="text" 
-                                    name="title" 
-                                    placeholder="Titulo" 
-                                    className="form-control"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)} />
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        placeholder="Titulo"
+                                        className="form-control"
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value)} />
                                 </div>
                                 <div className="form-floating">
                                     <textarea

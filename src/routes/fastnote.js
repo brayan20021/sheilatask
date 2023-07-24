@@ -19,4 +19,10 @@ router.post('/fast-notes-description', fastnoteClass.show_description);
 
 router.post('/add-fast-notes', fastnoteClass.post_addfastnote);
 
+router.post('/edit-fast-notes', fastnoteClass.editfastnote);
+
+//router.post('/edit-fast-notes', fastnoteClass.post_editfastnote);
+
+router.post('/dashboard', fastnoteClass.dashboard);
+
 module.exports = router;
