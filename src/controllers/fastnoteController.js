@@ -114,6 +114,23 @@ class fastnoteController {
 
     }
 
+    async deletefastnote(req, res){
+
+        try {
+
+            const {idnote} = req.body;
+            const note = await pool.query('update fastnotes set removed = 1 where id = ?', [idnote])
+            const confirmationCode = 1048;
+            return res.status(200).json(confirmationCode)
+
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
 }
 
 

@@ -23,6 +23,8 @@ router.post('/edit-fast-notes', fastnoteClass.editfastnote);
 
 router.put('/update-fast-notes', fastnoteClass.updatefastnote);
 
+router.post('/delete-fast-notes', fastnoteClass.deletefastnote);
+
 router.post('/dashboard', fastnoteClass.dashboard);
 
 module.exports = router;

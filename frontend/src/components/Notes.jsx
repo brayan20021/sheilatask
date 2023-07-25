@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 import Editnote from "./Editnotes";
+import Swal from "sweetalert2";
+
 
 const Note = ({ user }) => {
 
@@ -30,7 +31,6 @@ const Note = ({ user }) => {
     const textSignature = async (idnote) => {
 
         try {
-
             const response = await axios.post('http://localhost:4000/fast-notes-description', {
                 idnote
             })
@@ -44,6 +44,38 @@ const Note = ({ user }) => {
 
     const handleItemClick = (item) => {
         setActiveItem(item);
+    };
+
+    const onDelete = async (idnote) => {
+        try {
+            const result = await Swal.fire({
+                title: "¿Estás seguro?",
+                text: "Estás a punto de eliminar el archivo. Esta acción no se puede deshacer.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar",
+            });
+
+            if (result.isConfirmed) {
+                const response = await axios.post("http://localhost:4000/delete-fast-notes", {
+                    idnote,
+                });
+
+                if (response.data === 1048) {
+                    Swal.fire("Eliminado", "El archivo ha sido eliminado exitosamente.", "success");
+                    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idnote));
+                } else {
+                    Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
+                }
+            }
+        } catch (error) {
+
+            console.error(error);
+            Swal.fire("Error", "Ha ocurrido un error. Por favor, inténtelo de nuevo.", "error");
+        }
     };
 
 
@@ -93,7 +125,16 @@ const Note = ({ user }) => {
                                                             className="btn btn-outline-primary"
                                                         >
                                                             <div className="icon dripicons-document-edit">
-                                                                <span>Editar</span>
+                                                            </div>
+                                                        </button>
+                                                        -
+                                                        <button
+                                                            onClick={() => {
+                                                                onDelete(note_text[0].id);
+                                                            }}
+                                                            className="btn btn-outline-danger"
+                                                        >
+                                                            <div className="icon dripicons-trash">
                                                             </div>
                                                         </button>
                                                     </th>
@@ -106,7 +147,7 @@ const Note = ({ user }) => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        <Editnote idNote={note_text[0].id} edit_note = {setEdit_note} />
+                                        <Editnote idNote={note_text[0].id} edit_note={setEdit_note} />
                                     )}
                                 </div>
                             </div>

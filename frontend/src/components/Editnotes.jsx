@@ -111,7 +111,7 @@ const Editnote = ({ idNote, edit_note }) => {
                             />
 
                         </th>
-                        <th className="col-2">
+                        <th className="col-1">
                             <button
                                 type="submit"
                                 className="btn btn-success"
