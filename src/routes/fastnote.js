@@ -21,7 +21,7 @@ router.post('/add-fast-notes', fastnoteClass.post_addfastnote);
 
 router.post('/edit-fast-notes', fastnoteClass.editfastnote);
 
-//router.post('/edit-fast-notes', fastnoteClass.post_editfastnote);
+router.put('/update-fast-notes', fastnoteClass.updatefastnote);
 
 router.post('/dashboard', fastnoteClass.dashboard);
 

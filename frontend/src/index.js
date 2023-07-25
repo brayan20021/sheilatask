@@ -28,6 +28,7 @@ import './assets/vendors/dripicons/webfont.css';
 import './assets/vendors/tinymce/skins/ui/oxide/skin.min.css';
 import './assets/vendors/tinymce/tinymce.min.js';
  import './assets/vendors/tinymce/plugins/code/plugin.min.js'; 
+ import './assets/css/personalizado.css'; 
 
 
 import './assets/vendors/sweetalert2/sweetalert2.all.min.js';

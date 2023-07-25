@@ -1,63 +1,142 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Note from "./Notes";
 
-const Editnote = ({ idSignature }) => {
+const Editnote = ({ idNote, edit_note }) => {
     const [note, setNote] = useState([]);
-
+    const navigate = useNavigate()
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
 
     useEffect(() => {
 
         const editNotes = async () => {
 
             try {
-                
+
                 const response = await axios.post('http://localhost:4000/edit-fast-notes', {
-                    idSignature
+                    idNote,
+
                 });
                 setNote(response.data[0]);
-                console.log(response.data[0])
-        
+                setTitle(response.data[0].title)
+                setDescription(response.data[0].description)
+
             } catch (error) {
-        
+
                 console.log("Lo sentimos, hemos presentado problema, contacte con el administrador.")
-                
+
             }
         }
         editNotes()
 
-    
-
-    }, [idSignature])
+    }, [idNote])
 
 
+    const updateNotes = async (e) => {
+        e.preventDefault();
 
-//console.log(note)
+        try {
+
+            if (title.trim() === "" || description.trim() === "") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Los datos no pueden ir vacios",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    //navigate("/notes");
+                });
+                return
+            }
+
+            const response = await axios.put('http://localhost:4000/update-fast-notes', {
+                idNote,
+                title,
+                description
+
+            })
+            if (response.data === 1048) {
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Se ha modificado la nota exitosamente",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    setTitle("");
+                    setDescription("");
+
+                    //Function to refresh components
+                    edit_note(false)
+
+                });
+
+            } else if (response.data === 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ha ocurrido un error en el sistema, por favor contacte con el administrador del sistema",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    //navigate("/notes");
+                });
+            }
+
+            console.log(response.data)
+
+        } catch (error) {
+
+            console.log("Ha ocurrido un error, por favor contacte con el administrador del sistema")
+
+        }
+
+
+    }
 
     return (
-        <table className="table table-bordered mb-0">
-        <thead>
-            <tr>
-                <th className="text-wrap text-break">
-                    <input className="form-control" type="text" name="title" value={note.title} />
-                    
-                </th>
-                <th>
-                    <button
-                        className="btn btn-success"
-                    >
-                        <div className="icon dripicons-document-edit">
-                            <span>Guardar</span>
-                        </div>
-                    </button>
-                </th>
-            </tr>
-        </thead>
-        <tbody style={{ height: '300px' }}>
-            <tr className="text-wrap text-break">
-                <td className="text-bold-500"><textarea style={{ height: '300px' }}  className="form-control" type="text" value={note.description} /></td>
-            </tr>
-        </tbody>
-    </table>
+        <form onSubmit={updateNotes}>
+            <table className="table table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th className="text-wrap text-break">
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="title"
+                                defaultValue={note.title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+
+                        </th>
+                        <th className="col-2">
+                            <button
+                                type="submit"
+                                className="btn btn-success"
+                            >
+                                <div className="icon dripicons-document-edit">
+                                    <span>Guardar</span>
+                                </div>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody style={{ height: '300px' }}>
+                    <tr className="text-wrap text-break">
+                        <td className="text-bold-500"><textarea
+                            style={{ height: '300px' }}
+                            className="form-control"
+                            type="text"
+                            name="description"
+                            onChange={(e) => setDescription(e.target.value)}
+                            defaultValue={note.description}>
+                        </textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     )
 
 }

@@ -16,6 +16,18 @@ const Addnote = ({ user }) => {
 
         try {
 
+            if (title.trim() === "" || description.trim() === "") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Los datos no pueden ir vacios",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    //navigate("/notes");
+                });
+                return
+            }
+
             const response = await axios.post('http://localhost:4000/add-fast-notes', {
                 idUser: idUser.id,
                 title,
@@ -39,6 +51,15 @@ const Addnote = ({ user }) => {
                     navigate("/notes");
                 });
 
+            } else if (response.data === 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ha ocurrido un error en el sistema, por favor contacte con el administrador del sistema",
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    //navigate("/notes");
+                });
             }
 
         } catch (error) {

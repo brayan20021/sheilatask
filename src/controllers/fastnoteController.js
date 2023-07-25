@@ -6,7 +6,7 @@ class fastnoteController {
 
         try {
 
-            const {idUser} = req.body;
+            const { idUser } = req.body;
             const notes = await pool.query('select * from fastnotes where user_id = ? and removed = 0 order by id desc limit 5;', [idUser])
 
             const allnote = await pool.query('select count(*) as total from fastnotes where user_id = ?', [idUser]);
@@ -68,27 +68,49 @@ class fastnoteController {
 
 
         } catch (error) {
+
             console.log(error)
+
+            const confirmationCode = 0;
+            res.status(200).json(confirmationCode)
 
         }
 
     }
 
-    async editfastnote(req, res){
+    async editfastnote(req, res) {
 
         try {
 
-            const { idSignature } = req.body;
-            const signature = await pool.query('select id, description, title from fastnotes where id = ?', [idSignature])
-            return res.status(200).json(signature);
+            const { idNote } = req.body;
+            const note = await pool.query('select id, description, title from fastnotes where id = ?', [idNote])
+            return res.status(200).json(note);
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    async updatefastnote(req, res) {
+
+
+        try {
+
+            const { idNote, title, description } = req.body;
             
+            const note = await pool.query('update fastnotes SET title = ?, description = ? where id = ?', [title, description, idNote])
+
+            const confirmationCode = 1048;
+            res.status(200).json(confirmationCode)
+
         } catch (error) {
 
             console.log(error)
-            
+            const confirmationCode = 0;
+            res.status(200).json(confirmationCode)
+
         }
-
-
 
     }
 
