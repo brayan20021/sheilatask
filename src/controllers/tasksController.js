@@ -13,12 +13,12 @@ class tasksController {
 
         try {
             const { idUser } = req.body
-             
+
             const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
                 right join subjects on subjects.id = tasks.subject_id
                 where subjects.user_id = ${idUser} and removed = 0 group by name;
-                `); 
-              
+                `);
+
             return res.status(200).json(signature);
             //res.render('./admin/subject', { signature: signature });
 
@@ -53,9 +53,8 @@ class tasksController {
 
         try {
 
-            const idsignature = req.body;
-
-            const id = idsignature.data
+            const {id} = req.body;
+            console.log(id)
             const name = idsignature.name
             await pool.query('update subjects set name = ? where id = ?', [name, id]);
 
@@ -71,12 +70,13 @@ class tasksController {
 
         try {
 
-            const id = req.body.data;
-            await pool.query('update subjects set removed = 1 where id = ?', [id]);
-            res.json("Hellow world")
+            const { id } = req.body;
+            const subject = await pool.query('update subjects set removed = 1 where id = ?', [id]);
+            const confdata = 1048;
+            res.status(200).json(confdata)
 
         } catch (error) {
-
+            console.log(error)
         }
 
     }
@@ -101,9 +101,9 @@ class tasksController {
 
     }
 
-    async showTextsignature(req, res){
+    async showTextsignature(req, res) {
 
-        const {idsignature} = req.body
+        const { idsignature } = req.body
         const text_signature = await pool.query('Select description, title from tasks where id = ?', [idsignature]);
 
         return res.status(200).json(text_signature)

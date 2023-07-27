@@ -127,7 +127,7 @@ const Note = ({ user }) => {
                                                             <div className="icon dripicons-document-edit">
                                                             </div>
                                                         </button>
-                                                        -
+                                                        &nbsp;
                                                         <button
                                                             onClick={() => {
                                                                 onDelete(note_text[0].id);
@@ -147,7 +147,7 @@ const Note = ({ user }) => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        <Editnote idNote={note_text[0].id} edit_note={setEdit_note} />
+                                        <Editnote idNote={note_text[0].id} edit_note={setEdit_note} notes={notes} setNotes = {setNotes} />
                                     )}
                                 </div>
                             </div>

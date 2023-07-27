@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
 const Signature = ({ user }) => {
   const userData = JSON.parse(user);
@@ -18,6 +19,81 @@ const Signature = ({ user }) => {
 
     fetchSignature();
   }, [idUser]);
+
+  const deleteSignature = async ( id ) => {
+
+    try {
+      const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Estás a punto de eliminar el archivo. Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        const response = await axios.post("http://localhost:4000/delete-signature", {
+          id,
+        });
+
+        if (response.data === 1048) {
+          Swal.fire("Eliminado", "El archivo ha sido eliminado exitosamente.", "success");
+          setSignature((signat) => signat.filter((signature) => signature.id !== id))
+        } else {
+          Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
+        }
+      }
+    } catch (error) {
+
+      console.error(error);
+      Swal.fire("Error", "Ha ocurrido un error. Por favor, inténtelo de nuevo.", "error");
+    }
+
+  }
+  const updateSignature = async ( id ) => {
+
+    try {
+      const result =
+      Swal.fire({
+        title: 'Ingrese el nuevo nombre',
+        input: 'text',
+        inputPlaceholder: 'Nombre de la asignatura',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (data) => {
+          // Aquí puedes realizar alguna validación si es necesario
+          return data;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      })
+
+      if (result.isConfirmed) {
+        const response = await axios.post("http://localhost:4000/update-signature", {
+          id,
+        });
+
+        if (response.data === 1048) {
+          Swal.fire("Eliminado", "La asignatura ha sido actualizado exitosamente.", "success");
+          
+        } else {
+          Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
+        }
+      }
+    } catch (error) {
+
+      console.error(error);
+      Swal.fire("Error", "Ha ocurrido un error. Por favor, inténtelo de nuevo.", "error");
+    }
+
+  }
 
   return (
     <div className="container p-4">
@@ -63,15 +139,15 @@ const Signature = ({ user }) => {
                           <td className="text-bold-500">{sig.total_task}</td>
                           <td>Remote</td>
                           <td>
-                            <button className="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Asignatura">
+                            <button className="btn btn-sm btn-outline-danger" onClick={() => deleteSignature(sig.id)} data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar Asignatura">
                               <span className="fa-fw select-all fas"></span>
-                            </button> |
-                            <button className="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modificar Asignatura">
+                            </button>
+                            &nbsp;<button className="btn btn-sm btn-outline-warning" onClick={() => updateSignature(sig.id)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modificar Asignatura">
                               <span className="fa-fw select-all fas"></span>
                             </button>
-                            | <Link to={`/signaturelist/${sig.id}`}> <button className="btn btn-success"> 
+                            &nbsp;<Link to={`/signaturelist/${sig.id}`}> <button className="btn btn-success">
 
-                            Ver apuntes</button></Link>
+                              Ver apuntes</button></Link>
                           </td>
                         </tr>
                       ))}

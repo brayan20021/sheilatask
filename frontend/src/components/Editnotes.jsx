@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import Note from "./Notes";
 
-const Editnote = ({ idNote, edit_note }) => {
+
+const Editnote = ({ idNote, edit_note, notes, setNotes }) => {
     const [note, setNote] = useState([]);
-    const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-
+    const newNotes = []
     useEffect(() => {
 
         const editNotes = async () => {
@@ -68,7 +66,8 @@ const Editnote = ({ idNote, edit_note }) => {
                 }).then(() => {
                     setTitle("");
                     setDescription("");
-
+                    //setNotes((newNote) => newNote.map((newNote) => notes))
+                    
                     //Function to refresh components
                     edit_note(false)
 

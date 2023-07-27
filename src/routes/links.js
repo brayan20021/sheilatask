@@ -15,9 +15,9 @@ router.post('/signature', taksClass.signature);
 
 router.post('/add-signature', isLoggetIn, taksClass.post_addsignature);
 
-router.post('/delete-signature', isLoggetIn, taksClass.post_deletesignature);
+router.post('/delete-signature', taksClass.post_deletesignature);
 
-router.post('/update-signature', isLoggetIn, taksClass.post_updatesignature);
+router.post('/update-signature', taksClass.post_updatesignature);
 
 router.get('/add/:signatureid', isLoggetIn, taksClass.addnote);
 
