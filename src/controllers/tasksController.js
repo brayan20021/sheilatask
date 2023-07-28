@@ -53,14 +53,14 @@ class tasksController {
 
         try {
 
-            const {id} = req.body;
-            console.log(id)
-            const name = idsignature.name
-            await pool.query('update subjects set name = ? where id = ?', [name, id]);
+            const { id, newName } = req.body;
+            console.log(req.body)
+            const signature = await pool.query('update subjects set name = ? where id = ?', [newName, id]);
+            const confirmationCode = 1048;
+            res.status(200).json(confirmationCode)
 
         } catch (error) {
             console.log(error)
-
         }
 
 

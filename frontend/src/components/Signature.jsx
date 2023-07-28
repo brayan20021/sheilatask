@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
+
+
 const Signature = ({ user }) => {
   const userData = JSON.parse(user);
   const idUser = userData.id;
@@ -20,7 +22,7 @@ const Signature = ({ user }) => {
     fetchSignature();
   }, [idUser]);
 
-  const deleteSignature = async ( id ) => {
+  const deleteSignature = async (id) => {
 
     try {
       const result = await Swal.fire({
@@ -53,38 +55,56 @@ const Signature = ({ user }) => {
     }
 
   }
-  const updateSignature = async ( id ) => {
+  const updateSignature = async (id) => {
 
     try {
       const result =
-      Swal.fire({
-        title: 'Ingrese el nuevo nombre',
-        input: 'text',
-        inputPlaceholder: 'Nombre de la asignatura',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Cancelar',
-        showLoaderOnConfirm: true,
-        preConfirm: (data) => {
-          // Aquí puedes realizar alguna validación si es necesario
-          return data;
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      })
+        Swal.fire({
+          title: 'Ingrese el nuevo nombre',
+          input: 'text',
+          inputPlaceholder: 'Nombre de la asignatura',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Guardar',
+          cancelButtonText: 'Cancelar',
+          showLoaderOnConfirm: true,
+          preConfirm: async (newName) => {
+            // Aquí puedes realizar alguna validación si es necesario
+            if (await newName.trim() !== "") {
+              return newName;
+            } else {
+              Swal.fire("Error", "Los datos no pueden ir vacios", "error");
+            }
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        })
 
-      if (result.isConfirmed) {
+      if ((await result).isConfirmed) {
         const response = await axios.post("http://localhost:4000/update-signature", {
           id,
+          newName: (await result).value
         });
+        const resultvalue = (await result).value;
+        setSignature((prevSignature) =>
+          prevSignature.map((signature) => {
+            if (signature.id === id) {
+              
+              return { ...signature, name: resultvalue };
+              
+            } else {
+
+              return signature;
+            }
+          })
+        );
 
         if (response.data === 1048) {
-          Swal.fire("Eliminado", "La asignatura ha sido actualizado exitosamente.", "success");
-          
+          Swal.fire("Actualizado", "La asignatura ha sido actualizada exitosamente.", "success");
+
         } else {
-          Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
+          Swal.fire("Error", "No se ha podido actualizar, si persiste contacte con el admin del sistema.", "error");
         }
       }
     } catch (error) {
@@ -146,7 +166,6 @@ const Signature = ({ user }) => {
                               <span className="fa-fw select-all fas"></span>
                             </button>
                             &nbsp;<Link to={`/signaturelist/${sig.id}`}> <button className="btn btn-success">
-
                               Ver apuntes</button></Link>
                           </td>
                         </tr>

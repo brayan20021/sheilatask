@@ -17,6 +17,7 @@ const Note = ({ user }) => {
             try {
                 const response = await axios.post('http://localhost:4000/fast-notes', { idUser });
                 setNotes(response.data);
+                setNote_text([response.data[0]]) 
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
             }
@@ -67,6 +68,7 @@ const Note = ({ user }) => {
                 if (response.data === 1048) {
                     Swal.fire("Eliminado", "El archivo ha sido eliminado exitosamente.", "success");
                     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idnote));
+                    setNote_text([1])
                 } else {
                     Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
                 }
@@ -147,7 +149,7 @@ const Note = ({ user }) => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        <Editnote idNote={note_text[0].id} edit_note={setEdit_note} notes={notes} setNotes = {setNotes} />
+                                        <Editnote idNote={note_text[0].id} edit_note={setEdit_note} setNote_text={setNote_text}/>
                                     )}
                                 </div>
                             </div>

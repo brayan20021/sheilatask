@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 
-const Editnote = ({ idNote, edit_note, notes, setNotes }) => {
+const Editnote = ({ idNote, edit_note, setNote_text}) => {
     const [note, setNote] = useState([]);
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -54,7 +54,6 @@ const Editnote = ({ idNote, edit_note, notes, setNotes }) => {
                 idNote,
                 title,
                 description
-
             })
             if (response.data === 1048) {
 
@@ -66,8 +65,7 @@ const Editnote = ({ idNote, edit_note, notes, setNotes }) => {
                 }).then(() => {
                     setTitle("");
                     setDescription("");
-                    //setNotes((newNote) => newNote.map((newNote) => notes))
-                    
+                    setNote_text([{id: idNote, title: title, description: description}])
                     //Function to refresh components
                     edit_note(false)
 
@@ -113,8 +111,7 @@ const Editnote = ({ idNote, edit_note, notes, setNotes }) => {
                         <th className="col-1">
                             <button
                                 type="submit"
-                                className="btn btn-success"
-                            >
+                                className="btn btn-success">
                                 <div className="icon dripicons-document-edit">
                                     <span>Guardar</span>
                                 </div>
