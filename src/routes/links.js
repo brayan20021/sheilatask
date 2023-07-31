@@ -13,13 +13,13 @@ router.get('/dashboard', isLoggetIn, taksClass.dashboard);
 
 router.post('/signature', taksClass.signature);
 
-router.post('/add-signature', isLoggetIn, taksClass.post_addsignature);
+router.post('/add-signature', taksClass.post_addsignature);
 
 router.post('/delete-signature', taksClass.post_deletesignature);
 
 router.post('/update-signature', taksClass.post_updatesignature);
 
-router.get('/add/:signatureid', isLoggetIn, taksClass.addnote);
+//router.get('/add/:signatureid', taksClass.addnote);
 
 router.post('/add/:signatureid', isLoggetIn, taksClass.post_addnote);
 

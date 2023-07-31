@@ -90,7 +90,7 @@ const Sidebar = () => {
               </a>
               <ul className="submenu">
                 <li className="submenu-item">
-                  <Link to="/default-layout">Default Layout</Link>
+                  <Link to="/default-layout">Tema</Link>
                 </li>
                 <li className="submenu-item">
                   <Link to="/1-column-layout">1 Column</Link>

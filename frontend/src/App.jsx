@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
@@ -12,6 +12,7 @@ import Addnote from './components/Addnotes';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [showHeader, setShowHeader] = useState(true); // Nuevo estado para controlar la visibilidad del Header
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,20 +36,24 @@ const App = () => {
     setIsLoggedIn(false);
   };
 
+  // Nuevo: Obtener la ubicación actual
+  const location = useLocation();
+
+  // Nuevo: Controlar la visibilidad del Header según la ruta actual
+  useEffect(() => {
+    setShowHeader(!location.pathname.startsWith('/notes'));
+  }, [location]);
+
   if (!isLoggedIn) {
-
-    return <Login setIsLoggedIn={setIsLoggedIn} />
-
+    return <Login setIsLoggedIn={setIsLoggedIn} />;
   }
 
   return (
-    /*   <Login setIsLoggedIn={setIsLoggedIn} /> */
-
-
     <div className="app">
       {isLoggedIn && <Sidebar />}
       <div id='main' className='layout-navbar'>
-        {isLoggedIn && <Header user={user} onLogout={logout} />}
+        {/* Nuevo: Mostrar el Header solo si showHeader es true */}
+        {showHeader && isLoggedIn && <Header user={user} onLogout={logout} />}
         <div id='main-content'>
           <Routes>
             <Route
@@ -66,7 +71,7 @@ const App = () => {
             />
 
             <Route
-              path="/signaturelist/:idsignature" // Corregido: añade "/:id" al final del path
+              path="/signaturelist/:idsignature"
               element={isLoggedIn ? <SignatureList user={user} /> : <Navigate to="/login" replace />}
             />
 
@@ -85,14 +90,11 @@ const App = () => {
               element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
             />
 
-
             {/* Agrega más rutas según tus necesidades */}
           </Routes>
-
         </div>
       </div>
     </div>
-
   );
 };
 

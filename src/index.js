@@ -51,21 +51,25 @@ app.use((req, res, next) => {
     app.locals.success = req.flash('success');
     app.locals.message = req.flash('message');
     app.locals.user = req.user;
+    app.locals.currentdate = () => {
+        const currentDate = new Date();
+        return currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    };
     next();
 });
 
 
 //React developer global bar
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4000'); 
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4000');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
 app.use(cors());
 app.use(
     cors({
-        origin: 'http://localhost:3000', 
-        methods: ['GET', 'POST'], 
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST'],
     })
 );
 

@@ -1,6 +1,16 @@
 //Contect the database
 const pool = require('../database');
 
+//global bar 
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+const day = String(currentDate.getDate()).padStart(2, '0');
+
+const currentdate = `${year}-${month}-${day}`;
+
+
+
 class tasksController {
 
     async dashboard(req, res) {
@@ -14,10 +24,10 @@ class tasksController {
         try {
             const { idUser } = req.body
 
-            const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task,  subjects.user_id from tasks
-                right join subjects on subjects.id = tasks.subject_id
-                where subjects.user_id = ${idUser} and removed = 0 group by name;
-                `);
+            const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task, currentdate, subjects.user_id from tasks
+            right join subjects on subjects.id = tasks.subject_id
+            where subjects.user_id = ${idUser} and removed = 0 group by name;
+            `);
 
             return res.status(200).json(signature);
             //res.render('./admin/subject', { signature: signature });
@@ -33,18 +43,20 @@ class tasksController {
 
         try {
 
-            const { name } = req.body;
-            const user = req.user.id
+            const { name, idUser } = req.body
+            
             const save = {
                 name,
-                'user_id': user,
+                currentdate,
+                user_id: idUser
             }
-            await pool.query("insert into subjects set ?", [save]);
-            req.flash('success', 'Asignatura guardado correctamente');
-            res.redirect('/signature');
+            
+            const signature = await pool.query("insert into subjects set ?", [save]);
+            const confirmationCode = 1048;
+            res.status(200).json(confirmationCode)
 
         } catch (error) {
-            res.render('./partials/errorserver');
+            console.log(error)
         }
 
     }
