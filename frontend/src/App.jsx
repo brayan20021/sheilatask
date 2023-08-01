@@ -50,10 +50,10 @@ const App = () => {
 
   return (
     <div className="app">
-      {isLoggedIn && <Sidebar />}
+      {isLoggedIn && <Sidebar user={user}/>}
       <div id='main' className='layout-navbar'>
         {/* Nuevo: Mostrar el Header solo si showHeader es true */}
-        {showHeader && isLoggedIn && <Header user={user} onLogout={logout} />}
+        {showHeader && isLoggedIn}
         <div id='main-content'>
           <Routes>
             <Route

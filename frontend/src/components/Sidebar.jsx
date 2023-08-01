@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { initializeDOMManipulation } from './domManipulation';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { logo } from '../assets';
+import { logo, face } from '../assets';
 
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
 
 
   const [activeItem, setActiveItem] = useState('dashboard');
+  const userData = JSON.parse(user)
 
   const handleItemClick = (item) => {
     setActiveItem(item);
@@ -84,16 +85,20 @@ const Sidebar = () => {
               ? "sidebar-item has-sub active"
               : "sidebar-item has-sub"}`}
               onClick={() => { handleItemClick('config') }}>
-              <a href="#" className="sidebar-link">
-                <i className="bi bi-grid-1x2-fill"></i>
-                <span>Configuracion</span>
-              </a>
+              <Link href="#" className="sidebar-link">
+                <div className="user-img d-flex align-items-center">
+                  <div className="avatar avatar-md" style={{ marginLeft: "-7px" }}>
+                    <img src={face} alt="User Avatar" />
+                  </div>
+                </div>
+                <span>{userData.fullname}</span>
+              </Link>
               <ul className="submenu">
                 <li className="submenu-item">
                   <Link to="/default-layout">Tema</Link>
                 </li>
                 <li className="submenu-item">
-                  <Link to="/1-column-layout">1 Column</Link>
+                  <Link to="/1-column-layout">Usuario</Link>
                 </li>
                 <li className="submenu-item">
                   <Link to="/vertical-navbar-layout">Vertical with Navbar</Link>

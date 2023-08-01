@@ -4,7 +4,7 @@ const pool = require('../database');
 //global bar 
 const currentDate = new Date();
 const year = currentDate.getFullYear();
-const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+const month = String(currentDate.getMonth() + 1).padStart(2, '0');
 const day = String(currentDate.getDate()).padStart(2, '0');
 
 const currentdate = `${year}-${month}-${day}`;
@@ -44,13 +44,13 @@ class tasksController {
         try {
 
             const { name, idUser } = req.body
-            
+
             const save = {
                 name,
                 currentdate,
                 user_id: idUser
             }
-            
+
             const signature = await pool.query("insert into subjects set ?", [save]);
             const confirmationCode = 1048;
             res.status(200).json(confirmationCode)
@@ -78,6 +78,41 @@ class tasksController {
 
     }
 
+    async editsignature(req, res) {
+
+        try {
+
+            const { idSnote } = req.body
+
+            const signature = await pool.query('select * from tasks where id = ?', [idSnote])
+            res.status(200).json(signature)
+            
+
+        } catch (error) {
+
+        }
+
+
+
+    }
+
+    async updatesignature(req, res) {
+
+        try {
+
+            const { idSnote, description, title } = req.body;
+            const signature = pool.query('update tasks SET description = ?, title = ? where id = ?', [description, title, idSnote])
+
+            const confirmationCode = 1048;
+            res.status(200).json(confirmationCode)
+
+        } catch (error) {
+
+            console.log(error)
+        }
+
+    }
+
     async post_deletesignature(req, res) {
 
         try {
@@ -97,8 +132,8 @@ class tasksController {
 
         try {
 
-            const { idsignature } = req.body
-            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? order by complete', [idsignature]);
+            const { idsignature, idUser } = req.body
+            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? and user_id = ? order by complete', [idsignature, idUser]);
 
             return res.status(200).json(signature);
 
@@ -116,7 +151,7 @@ class tasksController {
     async showTextsignature(req, res) {
 
         const { idsignature } = req.body
-        const text_signature = await pool.query('Select description, title from tasks where id = ?', [idsignature]);
+        const text_signature = await pool.query('Select id, description, title from tasks where id = ?', [idsignature]);
 
         return res.status(200).json(text_signature)
     }

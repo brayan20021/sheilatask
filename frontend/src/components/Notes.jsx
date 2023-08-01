@@ -25,7 +25,11 @@ const Note = ({ user }) => {
             try {
                 const response = await axios.post('http://localhost:4000/fast-notes', { idUser });
                 setNotes(response.data);
-                setNote_text([response.data[0]])
+                //console.log(response.data)
+                if(response.data[0]){
+                    setNote_text([response.data[0]])
+                }
+                
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
             }

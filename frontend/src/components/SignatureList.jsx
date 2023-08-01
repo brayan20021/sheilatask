@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
+import EditSignature from "./EditSignature";
 
 
 
@@ -11,16 +12,15 @@ const SignatureList = ({ user }) => {
     const userData = JSON.parse(user);
     const idUser = userData.id;
     const { idsignature } = useParams();
-    //console.log(idsignature)
     const [signature, setSignature] = useState([]);
     const [signature_text, setSignaturetext] = useState([1]);
-    //console.log(user)
+    const [editsignature, setEditSignature] = useState(false);
+
     useEffect(() => {
         const fetchSignature = async () => {
             try {
                 const response = await axios.post('http://localhost:4000/signaturelist', { idUser, idsignature });
                 setSignature(response.data);
-                console.log(response.data)
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
             }
@@ -40,7 +40,7 @@ const SignatureList = ({ user }) => {
             const response = await axios.post('http://localhost:4000/signaturelist-text', {
                 idsignature
             })
-            //console.log(response.data)
+
             setSignaturetext(response.data)
         } catch (error) {
             console.log('Lo sentimos, ha ocurrido un error en la solicitud');
@@ -53,7 +53,6 @@ const SignatureList = ({ user }) => {
         setActiveItem(item);
     };
 
-    console.log(signature_text)
 
     return (
         <div className="row">
@@ -80,7 +79,8 @@ const SignatureList = ({ user }) => {
                                                                         id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                                                                             textSignature(signat.id)
                                                                             setActiveItem(signat.title)
-                                                                        }}> <tr><td style={{width: "300px", maxWidth: "300px"}} class="text-bold-500">{signat.title}</td></tr></a>
+                                                                            setEditSignature(false)
+                                                                        }}> <tr><td style={{ width: "300px", maxWidth: "300px" }} class="text-bold-500">{signat.title}</td></tr></a>
                                                                 ))}
                                                             </tbody>
                                                         </table>
@@ -89,20 +89,45 @@ const SignatureList = ({ user }) => {
                                             </div>
                                             <div className="col-9">
                                                 <div className="tab-content" id="v-pills-tabContent">
-                                                    <table className="table table-bordered mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    <h2>{signature_text[0].title}</h2>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody style={{ height: '300px' }}>
-                                                            <tr>
-                                                               <p className="text-bold-500">{signature_text[0].description}</p> 
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    {!editsignature ? (
+                                                        <table className="table table-bordered mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <h2>{signature_text[0].title}</h2>
+                                                                    </th>
+                                                                    <th className="col-2">
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                setEditSignature(true)
+                                                                            }}
+                                                                            className="btn btn-outline-primary"
+                                                                        >
+                                                                            <div className="icon dripicons-document-edit">
+                                                                            </div>
+                                                                        </button>
+                                                                        &nbsp;
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                //onDelete(note_text[0].id);
+                                                                            }}
+                                                                            className="btn btn-outline-danger"
+                                                                        >
+                                                                            <div className="icon dripicons-trash">
+                                                                            </div>
+                                                                        </button>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style={{ height: '300px' }}>
+                                                                <tr>
+                                                                    <p className="text-bold-500">{signature_text[0].description}</p>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>) : (
+                                                        <EditSignature idSnote = {signature_text[0].id} setSignaturetext = {setSignaturetext} setEditSignature = {setEditSignature} idUser = {idUser} />
+                                                    )}
+
                                                 </div>
                                             </div>
                                         </div>
