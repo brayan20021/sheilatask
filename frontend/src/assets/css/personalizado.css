@@ -81,7 +81,7 @@
 } 
 
 .contenedor::-webkit-scrollbar:horizontal {
-    height: 10px;
+    height: 0%;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
@@ -92,4 +92,21 @@
 
 .contenedor::-webkit-scrollbar-track {
     border-radius: 10px;  
+}
+
+/* Estilos para el efecto de "hover" en la clase "note-title" */
+.note-title {
+  /* Estilo original del título */
+  font-size: 16px;
+  /* Otros estilos del título */
+
+  /* Transición para el efecto de acercamiento */
+  transition: transform 0.3s ease;
+}
+
+.note-title:hover {
+  /* Estilos al hacer "hover" */
+  transform: scale(1.2); /* Aumentar el tamaño en un 20% */
+  background-color: rgba(0, 0, 255, 0.144);
+  /* Otros estilos al hacer "hover" */
 }

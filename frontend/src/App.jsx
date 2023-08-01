@@ -8,11 +8,14 @@ import Signature from './components/Signature';
 import SignatureList from './components/SignatureList';
 import Note from './components/Notes';
 import Addnote from './components/Addnotes';
+import WelcomeLoader from './components/WelcomeLoader';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [showHeader, setShowHeader] = useState(true); // Nuevo estado para controlar la visibilidad del Header
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,6 +29,13 @@ const App = () => {
       setUser(null);
       setIsLoggedIn(false);
     }
+
+    setTimeout(() => {
+
+      setLoading(false)
+
+    }, 5000);
+
   }, []);
 
   const logout = () => {
@@ -49,52 +59,63 @@ const App = () => {
   }
 
   return (
-    <div className="app">
-      {isLoggedIn && <Sidebar user={user}/>}
-      <div id='main' className='layout-navbar'>
-        {/* Nuevo: Mostrar el Header solo si showHeader es true */}
-        {showHeader && isLoggedIn}
-        <div id='main-content'>
-          <Routes>
-            <Route
-              path="/"
-              element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
-            />
-            <Route
-              path="/login"
-              element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" />}
-            />
+    <div>
 
-            <Route
-              path="/signature"
-              element={isLoggedIn ? <Signature user={user} /> : <Navigate to="/login" replace />}
-            />
+      {loading ? (
+        <WelcomeLoader />
+      ) : (
+        <div className="app">
+          {isLoggedIn && <Sidebar user={user} onLogout={logout} />}
+          <div id='main' className='layout-navbar'>
+            {/* Nuevo: Mostrar el Header solo si showHeader es true */}
+            {showHeader && isLoggedIn}
+            <div id='main-content'>
+              <Routes>
+                <Route
+                  path="/"
+                  element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
+                />
+                <Route
+                  path="/login"
+                  element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" />}
+                />
 
-            <Route
-              path="/signaturelist/:idsignature"
-              element={isLoggedIn ? <SignatureList user={user} /> : <Navigate to="/login" replace />}
-            />
+                <Route
+                  path="/signature"
+                  element={isLoggedIn ? <Signature user={user} /> : <Navigate to="/login" replace />}
+                />
 
-            <Route
-              path="/dashboard"
-              element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/login" replace />}
-            />
+                <Route
+                  path="/signaturelist/:idsignature"
+                  element={isLoggedIn ? <SignatureList user={user} /> : <Navigate to="/login" replace />}
+                />
 
-            <Route
-              path="/notes"
-              element={isLoggedIn ? <Note user={user} /> : <Navigate to="/login" replace />}
-            />
+                <Route
+                  path="/dashboard"
+                  element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/login" replace />}
+                />
 
-            <Route
-              path="/addnotes"
-              element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
-            />
+                <Route
+                  path="/notes"
+                  element={isLoggedIn ? <Note user={user} /> : <Navigate to="/login" replace />}
+                />
 
-            {/* Agrega más rutas según tus necesidades */}
-          </Routes>
+                <Route
+                  path="/addnotes"
+                  element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
+                />
+
+                {/* Agrega más rutas según tus necesidades */}
+              </Routes>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
+      )
+      }
+
+
+    </div >
   );
 };
 

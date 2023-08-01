@@ -115,7 +115,7 @@ const Note = ({ user }) => {
                                                                 {notes.map((note) => (
                                                                     <a className={activeItem === `${note.title}`
                                                                         ? "nav-link active"
-                                                                        : "nav-link"}
+                                                                        : "nav-link note-title"}
                                                                         id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                                                                             textSignature(note.id)
                                                                             setActiveItem(note.title)

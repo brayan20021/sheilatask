@@ -5,7 +5,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { logo, face } from '../assets';
 
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, onLogout }) => {
 
 
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -101,10 +101,7 @@ const Sidebar = ({ user }) => {
                   <Link to="/1-column-layout">Usuario</Link>
                 </li>
                 <li className="submenu-item">
-                  <Link to="/vertical-navbar-layout">Vertical with Navbar</Link>
-                </li>
-                <li className="submenu-item">
-                  <Link to="/horizontal-layout">Horizontal Menu</Link>
+                  <Link to="/horizontal-layout" onClick={onLogout}>Cerrar sesión</Link>
                 </li>
               </ul>
             </li>

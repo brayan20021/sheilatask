@@ -75,7 +75,7 @@ const SignatureList = ({ user }) => {
                                                                 {signature.map((signat) => (
                                                                     <a className={activeItem === `${signat.title}`
                                                                         ? "nav-link active"
-                                                                        : "nav-link"}
+                                                                        : "nav-link note-title"}
                                                                         id="v-pills-home-tab" aria-controls="v-pills-home" aria-selected="true" onClick={() => {
                                                                             textSignature(signat.id)
                                                                             setActiveItem(signat.title)
