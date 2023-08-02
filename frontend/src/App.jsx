@@ -4,10 +4,10 @@ import Login from './components/auth/Login';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
-import Signature from './components/Signature';
-import SignatureList from './components/SignatureList';
-import Note from './components/Notes';
-import Addnote from './components/Addnotes';
+import Signature from './components/signature/Signature';
+import SignatureList from './components/signature/SignatureList';
+import Note from './components/notes/Notes';
+import Addnote from './components/notes/Addnotes';
 import WelcomeLoader from './components/WelcomeLoader';
 
 const App = () => {
@@ -62,7 +62,7 @@ const App = () => {
     <div>
 
       {loading ? (
-        <WelcomeLoader />
+        <WelcomeLoader user={user} />
       ) : (
         <div className="app">
           {isLoggedIn && <Sidebar user={user} onLogout={logout} />}
@@ -75,6 +75,7 @@ const App = () => {
                   path="/"
                   element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
                 />
+                
                 <Route
                   path="/login"
                   element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" />}
@@ -104,8 +105,7 @@ const App = () => {
                   path="/addnotes"
                   element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
                 />
-
-                {/* Agrega más rutas según tus necesidades */}
+                
               </Routes>
             </div>
           </div>

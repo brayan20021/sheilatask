@@ -8,9 +8,6 @@ const taksClass = new tasksController();
 const pool = require('../database')
 const { isLoggetIn } = require('../lib/auth')
 
-
-router.get('/dashboard', isLoggetIn, taksClass.dashboard);
-
 router.post('/signature', taksClass.signature);
 
 router.post('/add-signature', taksClass.post_addsignature);
@@ -27,12 +24,6 @@ router.post('/signaturelist', taksClass.showsignature);
 
 router.post('/signaturelist-text', taksClass.showTextsignature);
 
-router.post('/signaturelist/task/delete/:id', isLoggetIn, taksClass.post_deletenote);
-
-router.get('/signaturelist/task/edit/:id', isLoggetIn, taksClass.editnote);
-
-router.post('/signaturelist/tasks/edit/:id', isLoggetIn, taksClass.post_editnote);
-
-router.get('/task/finishtask/:id', isLoggetIn, taksClass.finishtask);
+router.post('/add-signature-note', taksClass.post_signatureNote);
 
 module.exports = router;

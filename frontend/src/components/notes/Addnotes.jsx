@@ -76,7 +76,7 @@ const Addnote = ({ user }) => {
                 <div className="col">
                     <div className="card">
                         <div className="card-header">
-                            Floating Labels
+                            <center>Agregar una nueva nota</center>
                         </div>
                         <form onSubmit={addNotes}>
                             <div className="card-body">

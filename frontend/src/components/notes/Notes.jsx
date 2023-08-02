@@ -2,7 +2,8 @@ import React, { useEffect, useState, Suspense } from "react";
 import axios from "axios";
 import Editnote from "./Editnotes";
 import Swal from "sweetalert2";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
+import { Link } from "react-router-dom";
 
 
 const Note = ({ user }) => {
@@ -16,7 +17,7 @@ const Note = ({ user }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            setLoading(false); 
+            setLoading(false);
         }, 1000);
     }, []);
 
@@ -26,10 +27,10 @@ const Note = ({ user }) => {
                 const response = await axios.post('http://localhost:4000/fast-notes', { idUser });
                 setNotes(response.data);
                 //console.log(response.data)
-                if(response.data[0]){
+                if (response.data[0]) {
                     setNote_text([response.data[0]])
                 }
-                
+
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
             }
@@ -104,9 +105,37 @@ const Note = ({ user }) => {
                         <div className="row">
                             <div className="col-md-12 mx-auto">
                                 <div className="card text-center">
+                                    <div className="d-flex justify-content-end">
+                                        <Link to="/addnotes">
+                                            <button
+                                                className="btn btn-success ml-auto">
+                                                <div className="icon dripicons-plus"></div>
+                                            </button>
+                                        </Link>
+                                        &nbsp;
+                                        <button
+                                            onClick={() => {
+                                                setEdit_note(true);
+                                            }}
+                                            className="btn btn-primary"
+                                        >
+                                            <div className="icon dripicons-document-edit">
+                                            </div>
+                                        </button>
+                                        &nbsp;
+                                        <button
+                                            onClick={() => {
+                                                onDelete(note_text[0].id);
+                                            }}
+                                            className="btn btn-outline-danger"
+                                        >
+                                            <div className="icon dripicons-trash">
+                                            </div>
+                                        </button>
+                                    </div>
                                     <div className="card-body">
                                         <div className="row">
-                                            <div className="col-3">
+                                            <div className="col-md-3">
                                                 <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                                     <div className="table-responsive">
                                                         <table className="table table-lg">
@@ -120,7 +149,7 @@ const Note = ({ user }) => {
                                                                             textSignature(note.id)
                                                                             setActiveItem(note.title)
                                                                             setEdit_note(false);
-                                                                        }}> <tr><td style={{ width: "300px", maxWidth: "300px" }} className="text-bold-500">{note.title}</td></tr></a>
+                                                                        }}> <tr><td style={{ width: "300px", maxWidth: "300px" }} className="text-bold-500 ">{note.title}</td></tr></a>
                                                                 ))}
 
                                                             </tbody>
@@ -128,7 +157,7 @@ const Note = ({ user }) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-9">
+                                            <div className="col-md-9">
                                                 <div className="tab-content" id="v-pills-tabContent">
                                                     {!edit_note ? (
                                                         <table className="table table-bordered mb-0">
@@ -136,27 +165,6 @@ const Note = ({ user }) => {
                                                                 <tr>
                                                                     <th className="text-wrap text-break">
                                                                         <h2>{note_text[0].title}</h2>
-                                                                    </th>
-                                                                    <th className="col-2">
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                setEdit_note(true);
-                                                                            }}
-                                                                            className="btn btn-outline-primary"
-                                                                        >
-                                                                            <div className="icon dripicons-document-edit">
-                                                                            </div>
-                                                                        </button>
-                                                                        &nbsp;
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                onDelete(note_text[0].id);
-                                                                            }}
-                                                                            className="btn btn-outline-danger"
-                                                                        >
-                                                                            <div className="icon dripicons-trash">
-                                                                            </div>
-                                                                        </button>
                                                                     </th>
                                                                 </tr>
                                                             </thead>

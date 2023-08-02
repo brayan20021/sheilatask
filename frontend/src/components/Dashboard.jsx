@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from './Spinner';
+import { face } from '../assets';
 
 const Dashboard = ({ user }) => {
 
@@ -9,6 +10,7 @@ const Dashboard = ({ user }) => {
   const [lastnote, setLastnote] = useState([])
   const [totalNote, setTotalNote] = useState([])
   const [loading, setLoading] = useState(true)
+  const username = JSON.parse(user)
 
   useEffect(() => {
 
@@ -60,6 +62,23 @@ const Dashboard = ({ user }) => {
                     <div className="card-body px-3 py-4-5">
                       <div className="row">
                         <div className="col-md-4">
+                          <div className="stats-icon red">
+                            <i className="iconly-boldBookmark"></i>
+                          </div>
+                        </div>
+                        <div className="col-md-8">
+                          <h6 className="text-muted font-semibold">Notas guardadas</h6>
+                          <h6 className="font-extrabold mb-0">112</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 col-lg-3 col-md-6">
+                  <div className="card">
+                    <div className="card-body px-3 py-4-5">
+                      <div className="row">
+                        <div className="col-md-4">
                           <div className="stats-icon purple">
                             <i className="iconly-boldShow"></i>
                           </div>
@@ -82,7 +101,7 @@ const Dashboard = ({ user }) => {
                           </div>
                         </div>
                         <div className="col-md-8">
-                          <h6 className="text-muted font-semibold">Finalizadas</h6>
+                          <h6 className="text-muted font-semibold">Asignaturas</h6>
                           <h6 className="font-extrabold mb-0">120</h6>
                         </div>
                       </div>
@@ -101,23 +120,6 @@ const Dashboard = ({ user }) => {
                         <div className="col-md-8">
                           <h6 className="text-muted font-semibold">Recordatorios</h6>
                           <h6 className="font-extrabold mb-0">6</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 col-lg-3 col-md-6">
-                  <div className="card">
-                    <div className="card-body px-3 py-4-5">
-                      <div className="row">
-                        <div className="col-md-4">
-                          <div className="stats-icon red">
-                            <i className="iconly-boldBookmark"></i>
-                          </div>
-                        </div>
-                        <div className="col-md-8">
-                          <h6 className="text-muted font-semibold">Notas guardadas</h6>
-                          <h6 className="font-extrabold mb-0">112</h6>
                         </div>
                       </div>
                     </div>
@@ -147,11 +149,11 @@ const Dashboard = ({ user }) => {
                 <div className="card-body py-4 px-5">
                   <div className="d-flex align-items-center">
                     <div className="avatar avatar-xl">
-                      <img src="/images/faces/1.jpg" alt="Face 1" />
+                      <img src={face} alt="Face 1" />
                     </div>
                     <div className="ms-3 name">
-                      <h5 className="font-bold"></h5>
-                      <h6 className="text-muted mb-0">@johnducky</h6>
+                      <h5 className="font-bold">Welcome</h5>
+                      <h6 className="text-muted mb-0">{username.fullname}</h6>
                     </div>
                   </div>
                 </div>

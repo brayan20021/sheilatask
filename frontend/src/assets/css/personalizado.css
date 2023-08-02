@@ -66,7 +66,6 @@
     padding:0 1rem;
 }
 
-/* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
 
 .contenedor::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -110,3 +109,51 @@
   background-color: rgba(0, 0, 255, 0.144);
   /* Otros estilos al hacer "hover" */
 }
+
+.loader-container {
+  background-color: white; /* Fondo blanco */
+  justify-content: center;
+}
+
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.loader {
+  /* Agrega aquí los estilos del contenedor del loader */
+  width: 500px;
+  height: 500px;
+  animation: fade-in-left 2s ease-in-out;
+}
+
+/* Animación de slide-up */
+.slide-up {
+  animation: slide-up 1s ease-in-out;
+}
+
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.border-right {
+  border-right: 1px solid #ccc;
+}
+
+
+
