@@ -101,6 +101,9 @@ const Sidebar = ({ user, onLogout }) => {
                   <Link to="/1-column-layout">Usuario</Link>
                 </li>
                 <li className="submenu-item">
+                  <Link to="/1-column-layout">Idioma</Link>
+                </li>
+                <li className="submenu-item">
                   <Link to="/horizontal-layout" onClick={onLogout}>Cerrar sesión</Link>
                 </li>
               </ul>

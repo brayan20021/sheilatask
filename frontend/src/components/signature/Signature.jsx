@@ -11,6 +11,7 @@ const Signature = ({ user }) => {
   const [signature, setSignature] = useState([]);
 
   useEffect(() => {
+    
     const fetchSignature = async () => {
       try {
         const response = await axios.post('http://localhost:4000/signature', { idUser });
@@ -148,15 +149,11 @@ const Signature = ({ user }) => {
           name: (await result).value,
           idUser
         });
-/*         const resultvalue = (await result).value;
-         setSignature((signature) =>
-         signature.push((signature) => {
 
-          })
-        );  */
-
-        if (response.data === 1048) {
+        if (response.data[1] === 1048) {
           Swal.fire("Agregado", "La asignatura ha sido añadido exitosamente.", "success");
+          console.log(response.data[0])
+          setSignature((signature) => signature.concat(response.data[0]))
 
         } else {
           Swal.fire("Error", "No se ha podido agregar, si persiste contacte con el admin del sistema.", "error");

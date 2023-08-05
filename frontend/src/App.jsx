@@ -13,15 +13,19 @@ import WelcomeLoader from './components/WelcomeLoader';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [showHeader, setShowHeader] = useState(true); // Nuevo estado para controlar la visibilidad del Header
   const [loading, setLoading] = useState(true)
+
+  //check if user is on dashboard to start background
+  const location = useLocation();
+  const isDashboardPage = location.pathname === '/dashboard';
+
 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      // Obtener los datos del usuario del localStorage utilizando el token
+      // Get user data from LocalStorage using token.
       const userData = localStorage.getItem('userData');
       setUser(userData);
       setIsLoggedIn(true);
@@ -39,20 +43,13 @@ const App = () => {
   }, []);
 
   const logout = () => {
-    // Eliminar el token del local storage
+    // remove token from local storage
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
-    // Actualizar el estado para indicar que el usuario ha cerrado sesión
+    // update state to indicate user is logged out 
     setIsLoggedIn(false);
   };
 
-  // Nuevo: Obtener la ubicación actual
-  const location = useLocation();
-
-  // Nuevo: Controlar la visibilidad del Header según la ruta actual
-  useEffect(() => {
-    setShowHeader(!location.pathname.startsWith('/notes'));
-  }, [location]);
 
   if (!isLoggedIn) {
     return <Login setIsLoggedIn={setIsLoggedIn} />;
@@ -67,15 +64,26 @@ const App = () => {
         <div className="app">
           {isLoggedIn && <Sidebar user={user} onLogout={logout} />}
           <div id='main' className='layout-navbar'>
-            {/* Nuevo: Mostrar el Header solo si showHeader es true */}
-            {showHeader && isLoggedIn}
+
+            {isDashboardPage ?
+              <div id='main-content' className='dashboard-background'>
+                <Routes>
+                  <Route
+                    path="/dashboard"
+                    element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/login" replace />}
+                  />
+                </Routes>
+              </div>
+              : ""}
+
+
             <div id='main-content'>
               <Routes>
                 <Route
                   path="/"
                   element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
                 />
-                
+
                 <Route
                   path="/login"
                   element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" />}
@@ -91,10 +99,6 @@ const App = () => {
                   element={isLoggedIn ? <SignatureList user={user} /> : <Navigate to="/login" replace />}
                 />
 
-                <Route
-                  path="/dashboard"
-                  element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/login" replace />}
-                />
 
                 <Route
                   path="/notes"
@@ -105,7 +109,7 @@ const App = () => {
                   path="/addnotes"
                   element={isLoggedIn ? <Addnote user={user} /> : <Navigate to="/login" replace />}
                 />
-                
+
               </Routes>
             </div>
           </div>
@@ -113,8 +117,6 @@ const App = () => {
 
       )
       }
-
-
     </div >
   );
 };

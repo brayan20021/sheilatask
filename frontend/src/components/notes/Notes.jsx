@@ -117,8 +117,7 @@ const Note = ({ user }) => {
                                             onClick={() => {
                                                 setEdit_note(true);
                                             }}
-                                            className="btn btn-primary"
-                                        >
+                                            className="btn btn-primary">
                                             <div className="icon dripicons-document-edit">
                                             </div>
                                         </button>
@@ -127,8 +126,7 @@ const Note = ({ user }) => {
                                             onClick={() => {
                                                 onDelete(note_text[0].id);
                                             }}
-                                            className="btn btn-outline-danger"
-                                        >
+                                            className="btn btn-outline-danger">
                                             <div className="icon dripicons-trash">
                                             </div>
                                         </button>
@@ -137,9 +135,9 @@ const Note = ({ user }) => {
                                         <div className="row">
                                             <div className="col-md-3">
                                                 <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                    <div className="table-responsive">
+                                                    <div className="table-responsive" style={{ minHeight: "470px" }}>
                                                         <table className="table table-lg">
-                                                            <tbody className="navbar px-14 active contenedor" style={{ minHeight: "470px", minWidth: "238px" }}>
+                                                            <tbody className="navbar px-14 active contenedor" style={{ minWidth: "238px" }}>
 
                                                                 {notes.map((note) => (
                                                                     <a className={activeItem === `${note.title}`

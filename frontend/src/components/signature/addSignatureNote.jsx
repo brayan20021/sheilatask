@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 
-const AddSignatureNote = ({setSignature, idsignature, user }) => {
+const AddSignatureNote = ({setSignature, idsignature, user, setAddsignote }) => {
 
     const idUser = user
     const [title, setTitle] = useState([0]);
@@ -31,7 +31,7 @@ const AddSignatureNote = ({setSignature, idsignature, user }) => {
                 idsignature
             });
             
-            if (response.data === 1048) {
+            if (response.data[1] === 1048) {
 
                 Swal.fire({
                     icon: "success",
@@ -39,12 +39,8 @@ const AddSignatureNote = ({setSignature, idsignature, user }) => {
                     showConfirmButton: false,
                     timer: 1500,
                 }).then(() => {
-                    //setTitle("");
-                    //setDescription("");
-                    
-                    //setSignaturetext([{ id: idSnote, title: title, description: description }])
-                    //Function to refresh components
-                    //setEditSignature(false)
+                    setAddsignote(false)
+                    setSignature((signature) => signature.concat(response.data[0]))
 
                 });
 

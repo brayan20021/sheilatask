@@ -20,7 +20,9 @@ router.post('/edit-signature-tasks', taksClass.editsignature);
 
 router.put('/update-signature-tasks', taksClass.updatesignature);
 
-router.post('/signaturelist', taksClass.showsignature);
+router.post('/signaturelist', taksClass.showNotesignature);
+
+router.post('/delete-note-signature', taksClass.deleteNotesignature);
 
 router.post('/signaturelist-text', taksClass.showTextsignature);
 

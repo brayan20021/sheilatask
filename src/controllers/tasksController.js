@@ -13,15 +13,10 @@ const currentdate = `${year}-${month}-${day}`;
 
 class tasksController {
 
-    async dashboard(req, res) {
-
-        res.render('./admin/dashboard');
-
-    }
-
     async signature(req, res) {
 
         try {
+
             const { idUser } = req.body
 
             const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task, currentdate, subjects.user_id from tasks
@@ -30,11 +25,11 @@ class tasksController {
             `);
 
             return res.status(200).json(signature);
-            //res.render('./admin/subject', { signature: signature });
 
         } catch (error) {
 
-            res.render('./partials/errorserver');
+            console.log(error)
+
         }
 
     }
@@ -52,11 +47,14 @@ class tasksController {
             }
 
             const signature = await pool.query("insert into subjects set ?", [save]);
-            const confirmationCode = 1048;
+            const signatueData = await pool.query("SELECT * from subjects where user_id = ? ORDER BY id DESC LIMIT 1", [idUser])
+            const confirmationCode = [signatueData, 1048];
             res.status(200).json(confirmationCode)
 
         } catch (error) {
+
             console.log(error)
+
         }
 
     }
@@ -71,9 +69,10 @@ class tasksController {
             res.status(200).json(confirmationCode)
 
         } catch (error) {
-            console.log(error)
-        }
 
+            console.log(error)
+
+        }
 
     }
 
@@ -89,9 +88,9 @@ class tasksController {
 
         } catch (error) {
 
+            console.log(error)
+
         }
-
-
 
     }
 
@@ -108,6 +107,7 @@ class tasksController {
         } catch (error) {
 
             console.log(error)
+
         }
 
     }
@@ -122,12 +122,14 @@ class tasksController {
             res.status(200).json(confdata)
 
         } catch (error) {
+
             console.log(error)
+
         }
 
     }
 
-    async showsignature(req, res) {
+    async showNotesignature(req, res) {
 
         try {
 
@@ -136,11 +138,26 @@ class tasksController {
 
             return res.status(200).json(signature);
 
-            //res.render('./admin/signaturelist', { signature: signature, idsignature });
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
+    async deleteNotesignature(req, res) {
+
+        try {
+
+            const { id } = req.body;
+            const note = await pool.query("update tasks set eliminado = 1 where id = ?", [id])
+
+            const confirmationCode = 1048
+            res.status(200).json(confirmationCode);
 
         } catch (error) {
 
-            res.render('./partials/errorserver');
             console.log(error)
 
         }
@@ -149,10 +166,19 @@ class tasksController {
 
     async showTextsignature(req, res) {
 
-        const { idsignature } = req.body
-        const text_signature = await pool.query('Select id, description, title from tasks where id = ?', [idsignature]);
+        try {
 
-        return res.status(200).json(text_signature)
+            const { idsignature } = req.body
+            const text_signature = await pool.query('Select id, description, title from tasks where id = ?', [idsignature]);
+
+            return res.status(200).json(text_signature)
+
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
     }
 
     async post_signatureNote(req, res) {
@@ -166,8 +192,9 @@ class tasksController {
                 description,
                 subject_id: idsignature
             }
-            const signature_note = pool.query('insert into tasks set ?', [data]);
-            const confirmationCode = 1048;
+            const signature_note = await pool.query('insert into tasks set ?', [data]);
+            const note = await pool.query("select * from tasks where subject_id = ? order by id desc limit 1 ", [idsignature])
+            const confirmationCode = [note, 1048];
             res.status(200).json(confirmationCode);
 
         } catch (error) {
@@ -175,10 +202,6 @@ class tasksController {
         }
 
     }
-
-
-
-
 
 }
 
