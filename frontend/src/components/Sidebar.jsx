@@ -44,7 +44,7 @@ const Sidebar = ({ user, onLogout }) => {
                 handleItemClick('nuevo')
               }}>
               <Link to="/addnotes" className="sidebar-link btn btn-outline-success text-blue">
-                <div class="icon dripicons-document-edit"><span >Nuevo</span></div>
+                <div className="icon dripicons-document-edit"><span >Nuevo</span></div>
               </Link>
             </li>
             <li className={`${activeItem === 'dashboard'

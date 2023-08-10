@@ -21,6 +21,7 @@ const App = () => {
 
 
 
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -75,8 +76,7 @@ const App = () => {
                 </Routes>
               </div>
               : ""}
-
-
+              
             <div id='main-content'>
               <Routes>
                 <Route

@@ -21,7 +21,7 @@ class tasksController {
 
             const signature = await pool.query(`select subjects.id, subjects.name, count(*) as total_task, currentdate, subjects.user_id from tasks
             right join subjects on subjects.id = tasks.subject_id
-            where subjects.user_id = ${idUser} and removed = 0 group by name;
+            where subjects.user_id = ${idUser} and removed = 0 group by id desc;
             `);
 
             return res.status(200).json(signature);
@@ -134,7 +134,7 @@ class tasksController {
         try {
 
             const { idsignature, idUser } = req.body
-            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? and user_id = ? order by complete', [idsignature, idUser]);
+            const signature = await pool.query('Select * from tasks where eliminado = 0 and subject_id = ? and user_id = ? order by id desc', [idsignature, idUser]);
 
             return res.status(200).json(signature);
 

@@ -5,8 +5,8 @@ const tasksController = require('../controllers/tasksController');
 //Calling taskController class 
 const taksClass = new tasksController();
 
-const pool = require('../database')
-const { isLoggetIn } = require('../lib/auth')
+const pool = require('../database');
+const { isLoggetIn } = require('../lib/auth');
 
 router.post('/signature', taksClass.signature);
 

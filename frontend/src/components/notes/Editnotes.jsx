@@ -82,8 +82,6 @@ const Editnote = ({ idNote, edit_note, setNote_text}) => {
                 });
             }
 
-            console.log(response.data)
-
         } catch (error) {
 
             console.log("Ha ocurrido un error, por favor contacte con el administrador del sistema")

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Spinner from './Spinner';
 import { face } from '../assets';
 import Windows8StyleClock from './Clock'
+import { Link } from 'react-router-dom';
 
 const Dashboard = ({ user }) => {
 
@@ -41,11 +42,12 @@ const Dashboard = ({ user }) => {
   }, [idUser])
 
   const Card = ({ title, text }) => (
-    <div className="card">
-      <div className="card-content">
+
+    <div className="col-3">
+      <div className="card dashboard-lastn">
         <div className="card-body">
           <h4 className="card-title">{title}</h4>
-          <p className="card-text">{text}</p>
+          <p className="card-text card-content2">{text}</p>
         </div>
       </div>
     </div>
@@ -59,24 +61,26 @@ const Dashboard = ({ user }) => {
         </div>
         <div className="col-12 col-lg-9">
           <div className="row">
-            <div className="col-6 col-lg-3 col-md-6 move-down">
-              <div className="card transparent">
-                <div className="card-body px-3 py-4-5">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="stats-icon red">
-                        <i className="iconly-boldBookmark"></i>
+            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
+              <Link to="/notes">
+                <div className="card transparent">
+                  <div className="card-body px-3 py-4-5">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <div className="stats-icon red">
+                          <i className="iconly-boldBookmark"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-8">
-                      <h6 className="text-white custom-text-shadow">Notas guardadas</h6>
-                      <h6 className="font-extrabold mb-0">112</h6>
+                      <div className="col-md-8">
+                        <h6 className="text-white custom-text-shadow">Total de notas</h6>
+                        <h6 className="font-extrabold mb-0">{totalNote.total}</h6>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
-            <div className="col-6 col-lg-3 col-md-6 move-down">
+            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
               <div className="card transparent">
                 <div className="card-body px-3 py-4-5">
                   <div className="row">
@@ -86,14 +90,14 @@ const Dashboard = ({ user }) => {
                       </div>
                     </div>
                     <div className="col-md-8">
-                      <h6 className="text-white custom-text-shadow">Total de notas</h6>
-                      <h6 className="font-extrabold mb-0">{totalNote.total}</h6>
+                      <h6 className="text-white custom-text-shadow">Notas guardadas</h6>
+                      <h6 className="font-extrabold mb-0">7</h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-6 col-lg-3 col-md-6 move-down">
+            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
               <div className="card transparent">
                 <div className="card-body px-3 py-4-5">
                   <div className="row">
@@ -110,7 +114,7 @@ const Dashboard = ({ user }) => {
                 </div>
               </div>
             </div>
-            <div className="col-6 col-lg-3 col-md-6 move-down">
+            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
               <div className="card transparent">
                 <div className="card-body px-3 py-4-5">
                   <div className="row">
@@ -130,18 +134,13 @@ const Dashboard = ({ user }) => {
           </div>
           <div className="row fadeIn">
             <div className="col-12">
-              <div className="card">
-                <div className="card-header">
-                  <h4>Ultimas notas</h4>
+                <div className="card-header transparent">
+                  <center><h4 className='custom-text-shadow text-white'>Ultimas notas</h4></center>
+                <div className='row'>
+                  {lastnote.map((note) => (
+                    <Card title={note.title} text={note.description} />
+                  ))}
                 </div>
-                {lastnote.map((note) => (
-                  <div className="col-12">
-                    <div className="recent-message d-flex px-4 py-3">
-                      <Card title={note.title} text={note.description} />
-                    </div>
-                  </div>
-                ))}
-
               </div>
             </div>
           </div>

@@ -7,9 +7,9 @@ class fastnoteController {
         try {
 
             const { idUser } = req.body;
-            const notes = await pool.query('select * from fastnotes where user_id = ? and removed = 0 order by id desc limit 5;', [idUser])
+            const notes = await pool.query('select * from fastnotes where user_id = ? and removed = 0 order by id desc limit 4;', [idUser])
 
-            const allnote = await pool.query('select count(*) as total from fastnotes where user_id = ?', [idUser]);
+            const allnote = await pool.query('select count(*) as total from fastnotes where user_id = ? and removed = 0', [idUser]);
 
             res.status(200).json([notes, allnote[0]])
 

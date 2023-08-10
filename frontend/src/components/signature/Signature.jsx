@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
-import { addSignature } from './AddSignature'
+
 
 
 const Signature = ({ user }) => {

@@ -22,10 +22,8 @@ const Addnote = ({ user }) => {
                     title: "Los datos no pueden ir vacios",
                     showConfirmButton: false,
                     timer: 1500,
-                }).then(() => {
-                    //navigate("/notes");
-                });
-                return
+                })
+                return;
             }
 
             const response = await axios.post('http://localhost:4000/add-fast-notes', {
@@ -34,7 +32,6 @@ const Addnote = ({ user }) => {
                 description
 
             })
-            console.log(response.data)
             setTitle('');
             setDescription('');
 
@@ -91,7 +88,7 @@ const Addnote = ({ user }) => {
                                 </div>
                                 <div className="form-floating">
                                     <textarea
-                                        class="form-control"
+                                        className="form-control"
                                         style={{ minHeight: "150px" }}
                                         placeholder="Leave a comment here"
                                         name="description"

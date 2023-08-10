@@ -30,7 +30,6 @@ const Login = () => {
         setToken(response.data.token);
         const token = response.data.token;
         const userData = response.data.userData // Store only the user's name and ID
-        console.log(userData);
         setUser(userData)
 
         localStorage.setItem('token', token);
@@ -51,7 +50,7 @@ const Login = () => {
       console.log(error);
     }
 
-    setUser(userData); // Establecer los datos del usuario en el contexto
+    setUser(userData);
   };
 
 

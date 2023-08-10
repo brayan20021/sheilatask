@@ -57,7 +57,7 @@
 
 .contenedor {
   margin: 2rem auto;
-  height: 300px;
+  height: 500px;
   width: 90%;
   max-width: 400px;
   background: #ffffff;
@@ -128,6 +128,36 @@
   background-size: cover;
 
 }
+
+.dashboard-h {
+
+  font-size: 16px;
+  /* Transición para el efecto de acercamiento */
+  transition: transform 0.3s ease;
+}
+
+.dashboard-h:hover {
+  transform: scale(1.2);
+}
+
+.dashboard-lastn {
+
+  max-height: 250px;
+  min-height: 200px;
+  min-width: 80px;
+  
+}
+
+.card-content2 {
+  font-size: 14px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de líneas que deseas mostrar */
+  -webkit-box-orient: vertical;
+}
+
 
 
 @keyframes fade-in-left {
@@ -222,3 +252,84 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* notebook.css */
+
+
+/* Note.css */
+
+/* Estilos de la tabla */
+.notebook-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.note-description {
+  position: relative;
+  padding-bottom: 8px; /* Ajustar el espaciado entre las líneas */
+
+}
+
+.line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #00b0f0; /* Color azul cielo */
+  z-index: 1;
+}
+
+/* Estilos de cuaderno real en el borde exterior de la tabla */
+
+.notebook-table {
+ /*  width: 100%;
+  margin: auto;
+  margin-top: 10em;
+  max-width: 500px; */
+  box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.notebook-cover {
+  position: relative;
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notebook-back {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 90%;
+  height: 90%;
+  border: 1px solid #000;
+  border-radius: 5px;
+  z-index: -1;
+  background-color: #f0f0f0;
+}
+
+.text-bold-500 {
+  font-weight: 500;
+}
+.header-notedpad {
+
+  background-color: #190c5c;
+  width: 100%;
+  height: 50px;
+
+}
+
+.note-content-desc {
+  font-size: 20px;
+  text-align: justify;
+  line-height: 1.4;
+}
+
+.td-table {
+
+  min-height: 10px;
+
+}

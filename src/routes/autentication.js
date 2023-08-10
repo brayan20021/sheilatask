@@ -18,18 +18,6 @@ router.post('/signup', passport.authenticate('local.signup', {
 
 }));
 
-router.get('/signin', (req, res) => {
-
-    res.render('./auth/signin');
-
-    /*     if(isLoggetIn){
-        res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' });
-        } else {
-        res.status(200).json({ success: true, message: 'Sus credenciales son invalidas' });
-        } */
-
-});
-
 router.post('/signin', (req, res, next) => {
     passport.authenticate('local.signin', (err, user, info) => {
         if (err) {
@@ -52,11 +40,6 @@ router.post('/signin', (req, res, next) => {
     })(req, res, next);
 
 });
-
-
-
-
-
 
 router.get('/profile', isLoggetIn, (req, res) => {
 
