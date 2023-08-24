@@ -28,4 +28,6 @@ router.post('/signaturelist-text', taksClass.showTextsignature);
 
 router.post('/add-signature-note', taksClass.post_signatureNote);
 
+router.post('/trash-signature', taksClass.trash_signature);
+
 module.exports = router;

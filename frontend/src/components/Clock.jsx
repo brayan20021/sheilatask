@@ -10,7 +10,7 @@ const Windows8StyleClock = () => {
   
     return (
       <div className="clock-container">
-        <Clock format={"HH:mm:ss"} ticking={true} timezone={"UTC-4"} />
+        <Clock format={"HH:mm:ss"} ticking={true}  />
         <div className="date">{formatDate()}</div>
       </div>
     );

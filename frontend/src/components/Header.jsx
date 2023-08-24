@@ -3,7 +3,7 @@ import { face } from '../assets';
 
 const Header = ({ user, onLogout  }) => {
 
-    //console.log(JSON.parse(user))
+    
     const userData = JSON.parse(user)
 
     return (

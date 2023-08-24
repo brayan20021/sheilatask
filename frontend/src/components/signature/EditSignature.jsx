@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const EditSignature = ({ idSnote, setEditSignature, setSignaturetext, idUser}) => {
 
@@ -16,7 +17,7 @@ const EditSignature = ({ idSnote, setEditSignature, setSignaturetext, idUser}) =
                
             try {
 
-                const response = await axios.post('http://localhost:4000/edit-signature-tasks', {
+                const response = await axios.post(`${server_backend}/edit-signature-tasks`, {
                     idSnote,
                 });
                 setTask(response.data[0])
@@ -47,7 +48,7 @@ const EditSignature = ({ idSnote, setEditSignature, setSignaturetext, idUser}) =
                 })
             }
 
-            const response = await axios.put('http://localhost:4000/update-signature-tasks', {
+            const response = await axios.put(`${server_backend}/update-signature-tasks`, {
                 idSnote,
                 title,
                 description

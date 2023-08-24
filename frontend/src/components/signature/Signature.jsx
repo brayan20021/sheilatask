@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
-
+import config from '../../config';
+const server_backend = config.API_URL;
 
 
 const Signature = ({ user }) => {
@@ -14,7 +15,7 @@ const Signature = ({ user }) => {
     
     const fetchSignature = async () => {
       try {
-        const response = await axios.post('http://localhost:4000/signature', { idUser });
+        const response = await axios.post(`${server_backend}/signature`, { idUser });
         setSignature(response.data);
       } catch (error) {
         console.log('Lo sentimos, ha ocurrido un error en la solicitud');
@@ -39,7 +40,7 @@ const Signature = ({ user }) => {
       });
 
       if (result.isConfirmed) {
-        const response = await axios.post("http://localhost:4000/delete-signature", {
+        const response = await axios.post(`${server_backend}/delete-signature`, {
           id,
         });
 
@@ -84,7 +85,7 @@ const Signature = ({ user }) => {
         })
 
       if ((await result).isConfirmed) {
-        const response = await axios.post("http://localhost:4000/add-signature", {
+        const response = await axios.post(`${server_backend}/update-signature`, {
           id,
           newName: (await result).value
         });
@@ -145,7 +146,7 @@ const Signature = ({ user }) => {
         })
 
       if ((await result).isConfirmed) {
-        const response = await axios.post("http://localhost:4000/add-signature", {
+        const response = await axios.post(`${server_backend}/add-signature`, {
           name: (await result).value,
           idUser
         });

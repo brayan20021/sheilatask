@@ -4,6 +4,8 @@ import Spinner from './Spinner';
 import { face } from '../assets';
 import Windows8StyleClock from './Clock'
 import { Link } from 'react-router-dom';
+import config from '../config';
+const server_backend = config.API_URL;
 
 const Dashboard = ({ user }) => {
 
@@ -11,16 +13,6 @@ const Dashboard = ({ user }) => {
   const idUser = userData.id;
   const [lastnote, setLastnote] = useState([])
   const [totalNote, setTotalNote] = useState([])
-  const [loading, setLoading] = useState(true)
-  const username = JSON.parse(user)
-
-  useEffect(() => {
-
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000);
-
-  })
 
 
   useEffect(() => {
@@ -29,7 +21,7 @@ const Dashboard = ({ user }) => {
 
       try {
 
-        const response = await axios.post('http://localhost:4000/dashboard', { idUser })
+        const response = await axios.post(`${server_backend}/dashboard`, { idUser })
 
         setLastnote(response.data[0])
         setTotalNote(response.data[1])
@@ -138,7 +130,7 @@ const Dashboard = ({ user }) => {
                   <center><h4 className='custom-text-shadow text-white'>Ultimas notas</h4></center>
                 <div className='row'>
                   {lastnote.map((note) => (
-                    <Card title={note.title} text={note.description} />
+                    <Card key={note.id} title={note.title} text={note.description} />
                   ))}
                 </div>
               </div>

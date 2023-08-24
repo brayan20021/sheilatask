@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const AddSignatureNote = ({setSignature, idsignature, user, setAddsignote }) => {
 
@@ -24,7 +25,7 @@ const AddSignatureNote = ({setSignature, idsignature, user, setAddsignote }) => 
                 })
             }
 
-            const response = await axios.post('http://localhost:4000/add-signature-note', {
+            const response = await axios.post(`${server_backend}/add-signature-note`, {
                 idUser,
                 title,
                 description,

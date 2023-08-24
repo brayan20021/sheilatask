@@ -98,7 +98,7 @@ class fastnoteController {
         try {
 
             const { idNote, title, description } = req.body;
-            
+
             const note = await pool.query('update fastnotes SET title = ?, description = ? where id = ?', [title, description, idNote])
 
             const confirmationCode = 1048;
@@ -114,11 +114,11 @@ class fastnoteController {
 
     }
 
-    async deletefastnote(req, res){
+    async deletefastnote(req, res) {
 
         try {
 
-            const {idnote} = req.body;
+            const { idnote } = req.body;
             const note = await pool.query('update fastnotes set removed = 1 where id = ?', [idnote])
             const confirmationCode = 1048;
             return res.status(200).json(confirmationCode)
@@ -128,6 +128,24 @@ class fastnoteController {
             console.log(error)
 
         }
+
+    }
+
+    async deleted_notes(req, res) {
+
+        try {
+
+            const { idUser } = req.body;
+            const deleted_note = await pool.query("select * from fastnotes where user_id = ? and removed = 1", [idUser]);
+            console.log(deleted_note)
+            return res.status(200).json(deleted_note);
+
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
 
     }
 

@@ -1,17 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../AuthContext';
 import { UserContext } from '../../UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import config from '../../config';
+import Swal from 'sweetalert2';
+const server_backend = config.API_URL;
 
 const Login = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
   const { setToken } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -19,14 +22,18 @@ const Login = () => {
     let userData; // Variable para almacenar los datos del usuario
 
     try {
-      const response = await axios.post('http://localhost:4000/signin', {
+      const response = await axios.post(`${server_backend}/signin`, {
         username,
         password
       });
 
       if (response.data.success) {
         // Inicio de sesión exitoso
-        setMessage('Inicio de sesión exitoso');
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso',
+        });
+
         setToken(response.data.token);
         const token = response.data.token;
         const userData = response.data.userData // Store only the user's name and ID
@@ -41,13 +48,24 @@ const Login = () => {
 
 
       } else {
-        // Login failed
-        setMessage(response.data.message);
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Error :(',
+          text: 'Cuenta o contraseña incorrecta',
+          confirmButtonText: 'Aceptar'
+        });
+
       }
     } catch (error) {
       // Request failed
-      setMessage('Error en la solicitud');
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error :(',
+        text: 'Cuenta o contraseña incorrecta',
+        confirmButtonText: 'Aceptar'
+      });
+
     }
 
     setUser(userData);
@@ -95,13 +113,9 @@ const Login = () => {
             </form>
             <div className="text-center mt-5 text-lg fs-4">
               <p className="text-gray-600">
-                Don't have an account? <a href="auth-register.html" className="font-bold">Sign up</a>.
+                No tienes una cuenta? <Link to="/signup" className="font-bold">Registrate</Link>.
               </p>
               <p>
-                <a className="font-bold" href="auth-forgot-password.html">
-                  {message && <p>{message}</p>}
-                </a>
-                .
               </p>
             </div>
           </div>

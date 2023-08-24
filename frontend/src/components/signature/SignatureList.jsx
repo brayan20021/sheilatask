@@ -4,6 +4,8 @@ import axios from "axios";
 import EditSignature from "./EditSignature";
 import AddSignatureNote from "./addSignatureNote";
 import Swal from "sweetalert2";
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const SignatureList = ({ user }) => {
     const userData = JSON.parse(user);
@@ -17,7 +19,7 @@ const SignatureList = ({ user }) => {
     useEffect(() => {
         const fetchSignature = async () => {
             try {
-                const response = await axios.post('http://localhost:4000/signaturelist', { idUser, idsignature });
+                const response = await axios.post(`${server_backend}/signaturelist`, { idUser, idsignature });
                 setSignature(response.data);
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
@@ -29,7 +31,7 @@ const SignatureList = ({ user }) => {
 
     const textSignature = async (idsignature) => {
         try {
-            const response = await axios.post('http://localhost:4000/signaturelist-text', {
+            const response = await axios.post(`${server_backend}/signaturelist-text`, {
                 idsignature
             });
             setSignaturetext(response.data);
@@ -53,7 +55,7 @@ const SignatureList = ({ user }) => {
             });
 
             if (result.isConfirmed) {
-                const response = await axios.post("http://localhost:4000/delete-note-signature", {
+                const response = await axios.post(`${server_backend}/delete-note-signature`, {
                     id,
                 });
 

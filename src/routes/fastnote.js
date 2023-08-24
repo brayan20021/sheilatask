@@ -27,4 +27,6 @@ router.post('/delete-fast-notes', fastnoteClass.deletefastnote);
 
 router.post('/dashboard', fastnoteClass.dashboard);
 
+router.post('/deleted-notes', fastnoteClass.deleted_notes);
+
 module.exports = router;

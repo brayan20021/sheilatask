@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const Addnote = ({ user }) => {
     const [title, setTitle] = useState('')
@@ -26,7 +27,7 @@ const Addnote = ({ user }) => {
                 return;
             }
 
-            const response = await axios.post('http://localhost:4000/add-fast-notes', {
+            const response = await axios.post(`${server_backend}/add-fast-notes`, {
                 idUser: idUser.id,
                 title,
                 description

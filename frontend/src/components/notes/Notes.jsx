@@ -4,10 +4,13 @@ import Editnote from "./Editnotes";
 import Swal from "sweetalert2";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const Note = ({ user }) => {
     const userData = JSON.parse(user);
     const idUser = userData.id;
+    const design_note = userData.design_note;
     const [notes, setNotes] = useState([]);
     const [note_text, setNote_text] = useState([1]);
     const [edit_note, setEdit_note] = useState("");
@@ -22,7 +25,7 @@ const Note = ({ user }) => {
     useEffect(() => {
         const fetchSignature = async () => {
             try {
-                const response = await axios.post("http://localhost:4000/fast-notes", {
+                const response = await axios.post(`${server_backend}/fast-notes`, {
                     idUser,
                 });
                 setNotes(response.data);
@@ -40,7 +43,7 @@ const Note = ({ user }) => {
     const textSignature = async (idnote) => {
         try {
             const response = await axios.post(
-                "http://localhost:4000/fast-notes-description",
+                `${server_backend}/fast-notes-description`,
                 {
                     idnote,
                 }
@@ -53,9 +56,6 @@ const Note = ({ user }) => {
 
     const [activeItem, setActiveItem] = useState("dashboard");
 
-    const handleItemClick = (item) => {
-        setActiveItem(item);
-    };
 
     const onDelete = async (idnote) => {
         try {
@@ -73,7 +73,7 @@ const Note = ({ user }) => {
 
             if (result.isConfirmed) {
                 const response = await axios.post(
-                    "http://localhost:4000/delete-fast-notes",
+                    `${server_backend}/delete-fast-notes`,
                     {
                         idnote,
                     }
@@ -152,7 +152,7 @@ const Note = ({ user }) => {
                                                     <tbody
                                                         className="navbar px-14 active contenedor table-title">
                                                         {notes.map((note) => (
-                                                            <a
+                                                            <Link
                                                                 className={
                                                                     activeItem === `${note.title}`
                                                                         ? "nav-link active"
@@ -166,6 +166,7 @@ const Note = ({ user }) => {
                                                                     setActiveItem(note.title);
                                                                     setEdit_note(false);
                                                                 }}
+                                                                key={note.id}
                                                             >
                                                                 <tr>
                                                                     <td
@@ -178,7 +179,7 @@ const Note = ({ user }) => {
                                                                         {note.title}
                                                                     </td>
                                                                 </tr>
-                                                            </a>
+                                                            </Link>
                                                         ))}
                                                     </tbody>
                                                 </table>
@@ -189,16 +190,17 @@ const Note = ({ user }) => {
                                         <div className="tab-content"id="v-pills-tabContent">
                                             {!edit_note ? (
                                                 <table className="table table-bordered mb-0 notebook-table">
-                                                    <thead className="header-notedpad">
+                                                    <thead className="header-notedpad" style={{backgroundColor: design_note}}>
                                                         <tr>
-                                                            <th className="text-wrap text-break">
+                                                            <td className="text-wrap text-break">
                                                                 <h2 className="text-white">{note_text[0].title}</h2>
-                                                            </th>
+                                                            </td>
                                                         </tr>
                                                     </thead>
-                                                    <tbody style={{ height: "500px" }} className="">
+                                                    <tbody style={{ height: "400px" }} className="">
                                                         <tr>
                                                             {note_text[0].description ? (
+                                                                
                                                                 <h5 className="text-bold-500 text-justify note-content-desc">{note_text[0].description}
                                                                 </h5>
                                                             ) : (
@@ -207,9 +209,9 @@ const Note = ({ user }) => {
                                                                         <h1>Te animo a registrar tu primera nota!</h1>
                                                                         <button 
                                                                         className="btn btn-outline-success" 
-                                                                        style={{height: "500px", width: "800px"}} >
+                                                                        style={{height: "200%", width: "100%"}} >
                                                                             <div className="icon dripicons-plus">
-                                                                            </div>
+                                                                            </div>Agregar
                                                                         </button>
                                                                     </Link>
                                                                 </div>

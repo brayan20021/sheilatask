@@ -9,7 +9,6 @@ const { database } = require('./keys');
 const passport = require("passport")
 const cors = require('cors'); //for react
 
-
 //inicializations
 
 const app = express();
@@ -73,13 +72,6 @@ app.use(
     })
 );
 
-
-
-
-// Routes
-/* app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
-  }); */
 
 app.use(require('./routes'));
 app.use(require('./routes/links'));

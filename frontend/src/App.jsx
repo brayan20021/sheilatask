@@ -3,12 +3,14 @@ import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Dashboard from './components/Dashboard';
 import Sidebar from './components/Sidebar';
-import Header from './components/Header';
 import Signature from './components/signature/Signature';
 import SignatureList from './components/signature/SignatureList';
 import Note from './components/notes/Notes';
 import Addnote from './components/notes/Addnotes';
 import WelcomeLoader from './components/WelcomeLoader';
+import SignUp from './components/auth/SignUp';
+import RecycleBins from './components/RecycleBins';
+import Themes from './components/Theme';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,9 +20,7 @@ const App = () => {
   //check if user is on dashboard to start background
   const location = useLocation();
   const isDashboardPage = location.pathname === '/dashboard';
-
-
-
+  const isSignUp = location.pathname === '/signup';
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -51,9 +51,11 @@ const App = () => {
     setIsLoggedIn(false);
   };
 
-
-  if (!isLoggedIn) {
+  //Function to validate user login
+  if (!isLoggedIn && !isSignUp) {
     return <Login setIsLoggedIn={setIsLoggedIn} />;
+  } else if (!isLoggedIn && isSignUp) {
+    return <SignUp />
   }
 
   return (
@@ -62,6 +64,7 @@ const App = () => {
       {loading ? (
         <WelcomeLoader user={user} />
       ) : (
+
         <div className="app">
           {isLoggedIn && <Sidebar user={user} onLogout={logout} />}
           <div id='main' className='layout-navbar'>
@@ -76,7 +79,7 @@ const App = () => {
                 </Routes>
               </div>
               : ""}
-              
+
             <div id='main-content'>
               <Routes>
                 <Route
@@ -87,6 +90,11 @@ const App = () => {
                 <Route
                   path="/login"
                   element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" />}
+                />
+
+                <Route
+                  path="/recycle"
+                  element={isLoggedIn ? <RecycleBins user={user} /> : <Navigate to="/login" />}
                 />
 
                 <Route
@@ -103,6 +111,11 @@ const App = () => {
                 <Route
                   path="/notes"
                   element={isLoggedIn ? <Note user={user} /> : <Navigate to="/login" replace />}
+                />
+
+                <Route
+                  path="/themes"
+                  element={isLoggedIn ? <Themes user={user} /> : <Navigate to="/login" replace />}
                 />
 
                 <Route

@@ -76,8 +76,20 @@ const Sidebar = ({ user, onLogout }) => {
                 handleItemClick('signature')
               }}>
               <Link to="/signature" className="sidebar-link">
-                <i className="bi bi-collection-fill"></i>
+                <i className="bi bi-pen-fill"></i>
                 <span>Asignaturas</span>
+              </Link> 
+            </li>
+
+            <li className={`${activeItem === "recycle"
+              ? "sidebar-item active"
+              : "sidebar-item"}`}
+              onClick={() => {
+                handleItemClick('recycle')
+              }}>
+              <Link to="/recycle" className="sidebar-link">
+                <i className="icon dripicons-trash"></i>
+                <span>Papelera</span>
               </Link>
             </li>
 
@@ -95,16 +107,13 @@ const Sidebar = ({ user, onLogout }) => {
               </Link>
               <ul className="submenu">
                 <li className="submenu-item">
-                  <Link to="/default-layout">Tema</Link>
-                </li>
-                <li className="submenu-item">
-                  <Link to="/1-column-layout">Usuario</Link>
+                  <Link to="/themes">Tema</Link>
                 </li>
                 <li className="submenu-item">
                   <Link to="/1-column-layout">Idioma</Link>
                 </li>
                 <li className="submenu-item">
-                  <Link to="/horizontal-layout" onClick={onLogout}>Cerrar sesión</Link>
+                  <Link to="/login" onClick={onLogout}>Cerrar sesión</Link>
                 </li>
               </ul>
             </li>

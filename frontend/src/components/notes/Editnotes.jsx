@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-
+import config from '../../config';
+const server_backend = config.API_URL;
 
 const Editnote = ({ idNote, edit_note, setNote_text}) => {
     const [note, setNote] = useState([]);
@@ -14,7 +15,7 @@ const Editnote = ({ idNote, edit_note, setNote_text}) => {
 
             try {
 
-                const response = await axios.post('http://localhost:4000/edit-fast-notes', {
+                const response = await axios.post(`${server_backend}/edit-fast-notes`, {
                     idNote,
 
                 });
@@ -50,7 +51,7 @@ const Editnote = ({ idNote, edit_note, setNote_text}) => {
                 return
             }
 
-            const response = await axios.put('http://localhost:4000/update-fast-notes', {
+            const response = await axios.put(`${server_backend}/update-fast-notes`, {
                 idNote,
                 title,
                 description

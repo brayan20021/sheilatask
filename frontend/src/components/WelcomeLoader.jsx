@@ -6,7 +6,6 @@ import { loader } from "../assets";
 const WelcomeLoader = ({ user }) => {
 
   const username = JSON.parse(user)
-  console.log(username)
   return (
 
     <section className="loader-container d-flex justify-content-center align-items-center vh-100">

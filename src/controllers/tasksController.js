@@ -203,6 +203,12 @@ class tasksController {
 
     }
 
+    async trash_signature(req, res) {
+
+        
+
+    }
+
 }
 
 module.exports = tasksController;

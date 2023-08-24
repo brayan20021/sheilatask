@@ -158,6 +158,13 @@
   -webkit-box-orient: vertical;
 }
 
+.deleted_note { 
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el contenido excedente */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos */
+  max-width: 150px; /* Cambia este valor según tu diseño */
+}
+
 
 
 @keyframes fade-in-left {
@@ -315,8 +322,7 @@
   font-weight: 500;
 }
 .header-notedpad {
-
-  background-color: #190c5c;
+  
   width: 100%;
   height: 50px;
 
