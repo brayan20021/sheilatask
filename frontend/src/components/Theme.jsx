@@ -32,7 +32,7 @@ const Themes = ({ user }) => {
         <div className="row fadeIn">
             <div className="col-12">
                 <div className="card-header transparent">
-                    <center><h4 className='custom-text-shadow text-white'>¿Que tipo de diseño de gustaria tener en tu nota?</h4></center>
+                    <center><h4 className='custom-text-shadow text-white'>¿Que tipo de diseño de gustaria tener en tu nota?</h4></center><br />
                     <div className='row'>
                         <div className="col-6">
                             <div className="card dashboard-lastn">

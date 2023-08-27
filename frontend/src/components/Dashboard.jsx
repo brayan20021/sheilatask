@@ -13,7 +13,8 @@ const Dashboard = ({ user }) => {
   const idUser = userData.id;
   const [lastnote, setLastnote] = useState([])
   const [totalNote, setTotalNote] = useState([])
-
+  const [totalrecycle, setTotalRecycle] = useState([]);
+  const [totalsignature, setTotalSignature] = useState([])
 
   useEffect(() => {
 
@@ -25,6 +26,9 @@ const Dashboard = ({ user }) => {
 
         setLastnote(response.data[0])
         setTotalNote(response.data[1])
+        setTotalRecycle(response.data[2]);
+        setTotalSignature(response.data[3])
+
 
       } catch (error) {
         console.log('Lo sentimos, ha ocurrido un error en la solicitud');
@@ -77,30 +81,13 @@ const Dashboard = ({ user }) => {
                 <div className="card-body px-3 py-4-5">
                   <div className="row">
                     <div className="col-md-4">
-                      <div className="stats-icon purple">
-                        <i className="iconly-boldShow"></i>
-                      </div>
-                    </div>
-                    <div className="col-md-8">
-                      <h6 className="text-white custom-text-shadow">Notas guardadas</h6>
-                      <h6 className="font-extrabold mb-0">7</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
-              <div className="card transparent">
-                <div className="card-body px-3 py-4-5">
-                  <div className="row">
-                    <div className="col-md-4">
                       <div className="stats-icon blue">
                         <i className="iconly-boldProfile"></i>
                       </div>
                     </div>
                     <div className="col-md-8">
                       <h6 className="text-white custom-text-shadow">Asignaturas</h6>
-                      <h6 className="font-extrabold mb-0">120</h6>
+                      <h6 className="font-extrabold mb-0">{totalsignature.totalsignature}</h6>
                     </div>
                   </div>
                 </div>
@@ -117,17 +104,35 @@ const Dashboard = ({ user }) => {
                     </div>
                     <div className="col-md-8">
                       <h6 className="text-white custom-text-shadow">Recordatorios</h6>
-                      <h6 className="font-extrabold mb-0">6</h6>
+                      <h6 className="font-extrabold mb-0">Soon</h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div className="col-6 col-lg-3 col-md-6 move-down dashboard-h">
+              <div className="card transparent">
+                <div className="card-body px-3 py-4-5">
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="stats-icon purple">
+                        <i className="iconly-boldShow"></i>
+                      </div>
+                    </div>
+                    <div className="col-md-8">
+                      <h6 className="text-white custom-text-shadow">Papelera</h6>
+                      <h6 className="font-extrabold mb-0">{totalrecycle.totalrecycle}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div className="row fadeIn">
             <div className="col-12">
-                <div className="card-header transparent">
-                  <center><h4 className='custom-text-shadow text-white'>Ultimas notas</h4></center>
+              <div className="card-header transparent">
+                <center><h4 className='custom-text-shadow text-white'>Ultimas notas</h4></center>
                 <div className='row'>
                   {lastnote.map((note) => (
                     <Card key={note.id} title={note.title} text={note.description} />

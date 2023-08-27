@@ -11,7 +11,12 @@ class fastnoteController {
 
             const allnote = await pool.query('select count(*) as total from fastnotes where user_id = ? and removed = 0', [idUser]);
 
-            res.status(200).json([notes, allnote[0]])
+            const recycle = await pool.query('SELECT COUNT(*) AS totalrecycle FROM fastnotes WHERE removed = 1 AND removed_com = 0 and user_id = ?', [idUser]);
+
+            const signature = await pool.query('SELECT COUNT(*) AS totalsignature FROM subjects where user_id = ? and removed = 0', [idUser])
+
+
+            res.status(200).json([notes, allnote[0], recycle[0], signature[0]])
 
         } catch (error) {
             res.status(200).json("Lo sentimos, ha ocurrido un error, contacte con el administrador del sistema")
@@ -190,7 +195,7 @@ class fastnoteController {
             const removed_comp = await pool.query('UPDATE fastnotes SET removed_com = 1 WHERE user_id = ? and removed = 1', [idUser]);
             const confirm = 1048;
             res.status(200).json(confirm);
-            
+
         } catch (error) {
 
             console.log(error);

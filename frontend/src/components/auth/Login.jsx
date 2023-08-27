@@ -32,6 +32,7 @@ const Login = () => {
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión exitoso',
+          showConfirmButton: false,
         });
 
         setToken(response.data.token);

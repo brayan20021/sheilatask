@@ -119,7 +119,6 @@ const RecycleBins = ({ user }) => {
                             <center><h4 class="card-title">Papelera de reciclaje</h4></center>
                         </div>
                         <div class="card-content">
-
                             <div class="card-body">
                                 <div className="d-flex justify-content-end">
                                     <button className="btn btn-danger" onClick={() => {
@@ -150,7 +149,6 @@ const RecycleBins = ({ user }) => {
                                                 </tr>
 
                                             ))}
-
                                         </tbody>
                                     </table>
                                 </div>
