@@ -12,7 +12,6 @@ const RecycleBins = ({ user }) => {
     const userData = JSON.parse(user);
     const idUser = userData.id;
 
-
     useEffect(() => {
 
         const fetchSignature = async () => {
@@ -28,53 +27,106 @@ const RecycleBins = ({ user }) => {
     }, [idUser]);
 
     const restore = async (idNote) => {
-
         try {
-
             const confirmResult = await Swal.fire({
-                title: '¿Estás seguro de que deseas rescuperarlo?',
+                title: 'La nota se va a restaurar ¿desea continuar?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, recuperar',
                 cancelButtonText: 'Cancelar',
-            })
+            });
+
             if (confirmResult.isConfirmed) {
+                const response = await axios.post(`${server_backend}/restore-note`, { idNote });
 
-
-                const response = await axios.post(`${server_backend}/restore-note`, {
-                    idNote
-                }).then(
-
+                if (response.data === 1048) {
                     Swal.fire({
                         title: 'Nota recuperada correctamente',
                         icon: 'success',
-                    })
-                );
+                    });
+
+                    setDeleted_notes((notes) => notes.filter((note) => note.id !== idNote));
+                } else {
+                    Swal.fire({
+                        title: 'No se ha podido recuperar, si persiste contacte con el administrador del sistema',
+                        icon: 'error'
+                    });
+                }
             }
-
-            setDeleted_notes((notes) => notes.filter((note) => note.id !== idNote))
-
         } catch (error) {
-            console.log(error);
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Ha ocurrido un error, por favor intente de nuevo más tarde',
+                icon: 'error'
+            });
         }
-    }
+    };
+
+    const removed_all = async () => {
+        try {
+            const confirmResult = await Swal.fire({
+                title: 'Esta seguro que deseas eliminar todo, esta accion no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar todo',
+                cancelButtonText: 'Cancelar',
+            });
+
+            if (confirmResult.isConfirmed) {
+                const response = await axios.post(`${server_backend}/empty-trash`, {
+                    idUser
+                });
+                console.log(response.data)
+
+                if (response.data === 1048) {
+                    Swal.fire({
+                        title: "Las notas han sido eliminadas completamente",
+                        icon: "success"
+                    });
+                    setDeleted_notes([])
+                } else {
+                    Swal.fire({
+                        title: 'Ha ocurrido un error, por favor intente de nuevo más tarde',
+                        icon: 'error'
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Ha ocurrido un error, por favor intente de nuevo más tarde',
+                icon: 'error'
+            });
+        }
+    };
+
+
 
     return (
 
-        <div className="container p-4">
-            <div className="row">
-                <div className="col-12 col-md-6 order-md-2 order-first">
-                </div>
-            </div>
-            <section className="section">
-                <div className="row" id="table-hover-row">
-                    <div className="col-12">
-                        <div className="card">
-                            <center> <h1>Notas eliminadas</h1></center>
-                            <div className="card-header">
-                            </div>
-                            <div className="card-content">
+        /*  <div className="d-flex justify-content-end">
+         <button className="btn btn-danger" onClick={() => {
+             removed_all()
+         }}>Vaciar papelera</button>
+     </div> */
 
+        <section className="section">
+
+            <div class="row" id="basic-table">
+                <div class="col-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <center><h4 class="card-title">Papelera de reciclaje</h4></center>
+                        </div>
+                        <div class="card-content">
+
+                            <div class="card-body">
+                                <div className="d-flex justify-content-end">
+                                    <button className="btn btn-danger" onClick={() => {
+                                        removed_all()
+                                    }}>Vaciar papelera</button>
+                                </div>
+                                <br />
                                 <div className="table-responsive">
                                     <table className="table table-striped mb-0">
                                         <thead>
@@ -106,8 +158,8 @@ const RecycleBins = ({ user }) => {
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     )
 
 

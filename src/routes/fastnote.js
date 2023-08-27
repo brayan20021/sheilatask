@@ -33,4 +33,6 @@ router.post('/update-theme', fastnoteClass.change_theme);
 
 router.post('/restore-note', fastnoteClass.restore_note);
 
+router.post('/empty-trash', fastnoteClass.removed_complete);
+
 module.exports = router;

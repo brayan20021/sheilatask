@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 import EditSignature from "./EditSignature";
 import AddSignatureNote from "./addSignatureNote";
@@ -62,7 +62,7 @@ const SignatureList = ({ user }) => {
                 if (response.data === 1048) {
                     Swal.fire("Eliminado", "El archivo ha sido eliminado exitosamente.", "success");
                     setSignature((signat) => signat.filter((signature) => signature.id !== id))
-                    setSignaturetext([0])
+
                 } else {
                     Swal.fire("Error", "No se ha podido eliminar, si persiste contacte con el admin del sistema.", "error");
                 }

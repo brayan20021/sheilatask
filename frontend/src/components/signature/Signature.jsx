@@ -12,7 +12,7 @@ const Signature = ({ user }) => {
   const [signature, setSignature] = useState([]);
 
   useEffect(() => {
-    
+
     const fetchSignature = async () => {
       try {
         const response = await axios.post(`${server_backend}/signature`, { idUser });
@@ -170,32 +170,24 @@ const Signature = ({ user }) => {
 
   return (
 
-    <div className="container p-4">
-      <div className="row">
-        <div className="col-12 col-md-6 order-md-1 order-last">
-          <h3>Asignaturas registradas</h3><br /><br />
-        </div>
-        <div className="col-12 col-md-6 order-md-2 order-first">
-          <nav aria-label="breadcrumb" className="breadcrumb-header float-start float-lg-end">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item active" aria-current="page">
-                <button type="button" className="btn btn-primary" onClick={addSignature}>
+    <section class="section">
+
+      <div class="row" id="basic-table">
+        <div class="col-12 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <center><h4 class="card-title">Libretas</h4></center>
+            </div>
+            <div class="card-content">
+
+              <div class="card-body">
+                <p class="card-text">Con la capacidad de crear "Libretas" personalizadas, los estudiantes pueden organizar sin esfuerzo sus notas. Cada Libreta actúa como una sección dedicada donde puedes segmentar y categorizar tus notas según tus materias o cursos. Este sistema inteligente de organización te permite mantener un enfoque estructurado y enfocado en tus estudios o trabajo. Aprovecha al máximo tu proceso de aprendizaje registrando tus Libretas y siguiendo tus notas de manera efectiva en cada segmento dedicado.</p><br />
+
+                <div className="d-flex justify-content-end"><button type="button" className="btn btn-primary" onClick={addSignature}>
                   Agregar asignatura
                 </button>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
-      <section className="section">
-        <div className="row" id="table-hover-row">
-          <div className="col-12">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title"></h4>
-              </div>
-              <div className="card-content">
-                {/* Tabla con hover */}
+                </div>
+                <br />
                 <div className="table-responsive">
                   <table className="table table-striped mb-0">
                     <thead>
@@ -231,8 +223,9 @@ const Signature = ({ user }) => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div >
+    </section >
+
   );
 };
 

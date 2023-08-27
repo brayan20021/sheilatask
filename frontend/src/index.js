@@ -34,7 +34,7 @@ import './assets/css/personalizado.css';
 import './assets/vendors/sweetalert2/sweetalert2.all.min.js';
 import './assets/vendors/apexcharts/apexcharts.js';
 import './assets/js/sweetalerts.js';
-import './assets/js/jquery.min.js';    
+import './assets/js/jquery.min.js';     
 
 
 
