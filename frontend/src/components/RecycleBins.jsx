@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../config";
+import Swal from "sweetalert2";
 
 const server_backend = config.API_URL;
 
 const RecycleBins = ({ user }) => {
 
     const [deleted_notes, setDeleted_notes] = useState([]);
+
     const userData = JSON.parse(user);
     const idUser = userData.id;
 
@@ -17,7 +19,6 @@ const RecycleBins = ({ user }) => {
             try {
                 const response = await axios.post(`${server_backend}/deleted-notes`, { idUser });
                 setDeleted_notes(response.data);
-                console.log(response.data)
             } catch (error) {
                 console.log('Lo sentimos, ha ocurrido un error en la solicitud');
             }
@@ -25,6 +26,38 @@ const RecycleBins = ({ user }) => {
 
         fetchSignature();
     }, [idUser]);
+
+    const restore = async (idNote) => {
+
+        try {
+
+            const confirmResult = await Swal.fire({
+                title: '¿Estás seguro de que deseas rescuperarlo?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, recuperar',
+                cancelButtonText: 'Cancelar',
+            })
+            if (confirmResult.isConfirmed) {
+
+
+                const response = await axios.post(`${server_backend}/restore-note`, {
+                    idNote
+                }).then(
+
+                    Swal.fire({
+                        title: 'Nota recuperada correctamente',
+                        icon: 'success',
+                    })
+                );
+            }
+
+            setDeleted_notes((notes) => notes.filter((note) => note.id !== idNote))
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
 
@@ -59,7 +92,9 @@ const RecycleBins = ({ user }) => {
                                                     <td>{d_notes.title}</td>
                                                     <td className="deleted_note">{d_notes.description}</td>
                                                     <td>{d_notes.created_at}</td>
-                                                    <td><button className="btn btn-primary">Recuperar</button></td>
+                                                    <td><button className="btn btn-primary" onClick={() => {
+                                                        restore(d_notes.id)
+                                                    }}>Recuperar</button></td>
                                                 </tr>
 
                                             ))}

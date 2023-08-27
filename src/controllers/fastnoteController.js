@@ -27,7 +27,8 @@ class fastnoteController {
 
             const notes = await pool.query(`select * from fastnotes where user_id = ? and removed = 0 group by id desc;`, [idUser]);
 
-            return res.status(200).json(notes)
+            const userdesign = await pool.query('select design_note from users where id = ?', [idUser])
+            return res.status(200).json([notes, userdesign]);
 
         } catch (error) {
             console.log(error)
@@ -98,7 +99,6 @@ class fastnoteController {
         try {
 
             const { idNote, title, description } = req.body;
-
             const note = await pool.query('update fastnotes SET title = ?, description = ? where id = ?', [title, description, idNote])
 
             const confirmationCode = 1048;
@@ -137,7 +137,6 @@ class fastnoteController {
 
             const { idUser } = req.body;
             const deleted_note = await pool.query("select * from fastnotes where user_id = ? and removed = 1", [idUser]);
-            console.log(deleted_note)
             return res.status(200).json(deleted_note);
 
         } catch (error) {
@@ -146,7 +145,37 @@ class fastnoteController {
 
         }
 
+    }
 
+    async change_theme(req, res) {
+
+        try {
+
+            const { idUser, themecode } = req.body;
+            const change_theme = await pool.query('UPDATE users SET design_note = ? WHERE id = ?', [themecode, idUser]);
+            
+        } catch (error) {
+
+            console.log(error)
+
+        }
+    }
+
+    async restore_note(req, res){
+
+        try {
+
+            const {idNote} = req.body;
+
+            const restore = await pool.query('update fastnotes set removed = 0 where id = ?', [idNote])
+
+        } catch (error) {   
+
+            console.log(error)
+            
+        }
+
+    
     }
 
 }

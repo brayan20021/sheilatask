@@ -10,11 +10,11 @@ const server_backend = config.API_URL;
 const Note = ({ user }) => {
     const userData = JSON.parse(user);
     const idUser = userData.id;
-    const design_note = userData.design_note;
     const [notes, setNotes] = useState([]);
     const [note_text, setNote_text] = useState([1]);
     const [edit_note, setEdit_note] = useState("");
     const [loading, setLoading] = useState(true);
+    const [theme_design, setTheme_design] = useState("#190c5c")
 
     useEffect(() => {
         setTimeout(() => {
@@ -28,9 +28,11 @@ const Note = ({ user }) => {
                 const response = await axios.post(`${server_backend}/fast-notes`, {
                     idUser,
                 });
-                setNotes(response.data);
+                setNotes(response.data[0]);
+                setTheme_design(response.data[1][0].design_note)
+
                 if (response.data[0]) {
-                    setNote_text([response.data[0]]);
+                    setNote_text([response.data[0][0]]);
                 }
             } catch (error) {
                 console.log("Lo sentimos, ha ocurrido un error en la solicitud");
@@ -80,13 +82,15 @@ const Note = ({ user }) => {
                 );
 
                 if (response.data === 1048) {
+                    
                     Swal.fire(
                         "Eliminado",
                         "El archivo ha sido eliminado exitosamente.",
                         "success"
                     );
+
                     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idnote));
-                    setNote_text([1]);
+
                 } else {
                     Swal.fire(
                         "Error",
@@ -187,10 +191,10 @@ const Note = ({ user }) => {
                                         </div>
                                     </div>
                                     <div className="col-md-9">
-                                        <div className="tab-content"id="v-pills-tabContent">
+                                        <div className="tab-content" id="v-pills-tabContent">
                                             {!edit_note ? (
                                                 <table className="table table-bordered mb-0 notebook-table">
-                                                    <thead className="header-notedpad" style={{backgroundColor: design_note}}>
+                                                    <thead className="header-notedpad" style={{ backgroundColor: theme_design }}>
                                                         <tr>
                                                             <td className="text-wrap text-break">
                                                                 <h2 className="text-white">{note_text[0].title}</h2>
@@ -200,16 +204,16 @@ const Note = ({ user }) => {
                                                     <tbody style={{ height: "400px" }} className="">
                                                         <tr>
                                                             {note_text[0].description ? (
-                                                                
+
                                                                 <h5 className="text-bold-500 text-justify note-content-desc">{note_text[0].description}
                                                                 </h5>
                                                             ) : (
                                                                 <div className="d-flex justify-content">
                                                                     <Link to="/addnotes">
                                                                         <h1>Te animo a registrar tu primera nota!</h1>
-                                                                        <button 
-                                                                        className="btn btn-outline-success" 
-                                                                        style={{height: "200%", width: "100%"}} >
+                                                                        <button
+                                                                            className="btn btn-outline-success"
+                                                                            style={{ height: "200%", width: "100%" }} >
                                                                             <div className="icon dripicons-plus">
                                                                             </div>Agregar
                                                                         </button>

@@ -29,4 +29,8 @@ router.post('/dashboard', fastnoteClass.dashboard);
 
 router.post('/deleted-notes', fastnoteClass.deleted_notes);
 
+router.post('/update-theme', fastnoteClass.change_theme);
+
+router.post('/restore-note', fastnoteClass.restore_note);
+
 module.exports = router;
